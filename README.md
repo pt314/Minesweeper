@@ -1,6 +1,6 @@
 Minesweeper
 ===========
 
-Minesweeper game.
+Classic Minesweeper in Java.
 
 Coming later...
