@@ -1,22 +1,38 @@
 package pt314.just4fun.minesweeper;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
+import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.gui.MineFieldPanel;
 
 public class Minesweeper extends JFrame {
 
+	private int numRows = 10;
+	private int numCols = 15;
+	private int numMines = 20;
+
+	private MineField mineField;
+
 	public Minesweeper() {
 		super("Just for fun Minesweeper game!");
 		
-		add(new MineFieldPanel());
+		startNewGame();
 		
 		pack();
 		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
-	public static void main(String[] args) {
+	// TODO: set mines after first space is cleared???
+	private void startNewGame() {
+		mineField = new MineField(numRows, numCols, numMines);
+		JPanel board = new MineFieldPanel(mineField);
+		getContentPane().add(board);
+		pack();
+	}
+	
+    public static void main(String[] args) {
 		new Minesweeper();
 	}
 }
