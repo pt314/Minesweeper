@@ -49,18 +49,32 @@ public class MineField {
 		return numCols;
 	}
 
+	public int getNumMines() {
+		return numMines;
+	}
+
 	/**
 	 * Add mines at random locations.
 	 * 
 	 * TODO: prevent selecting the same location twice.
 	 */
 	private void addRandomMines(int numberOfMines) {
+		System.out.println("Desired number of mines: " + numberOfMines);
+		
 		Random rand = new Random();
-		for (int i = 0; i < numMines; i++) {
+		for (int i = 0; i < numberOfMines; i++) {
 			int r = rand.nextInt(numRows);
 			int c = rand.nextInt(numCols);
 			mineField[r][c] = true;
 		}
+		// update number of mines to reflect real number
+		numMines = 0;
+		for (int row = 0; row < numRows; row++)
+			for (int col = 0; col < numCols; col++)
+				if (mineField[row][col])
+					numMines++;
+
+		System.out.println("Real number of mines: " + numMines);
 	}
 	
 	/**
