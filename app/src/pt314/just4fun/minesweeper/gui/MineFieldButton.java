@@ -3,6 +3,7 @@ package pt314.just4fun.minesweeper.gui;
 import java.awt.Color;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import pt314.just4fun.minesweeper.game.MineField;
@@ -55,12 +56,17 @@ public class MineFieldButton extends JButton {
 		if (mineField.hasMineAt(row, col)) {
 			// show mine
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
-			setDisabledIcon(ImageLoader.createImageIcon("red_ball.png"));
 		}
 		else {
 			// show number of surrounding mines
 			int surroundingMines = mineField.getSurroundingMineCount(row, col);
-			setText(surroundingMines == 0 ? "" : String.valueOf(surroundingMines));
+			//setText(surroundingMines == 0 ? "" : String.valueOf(surroundingMines));
+			if (surroundingMines > 0) {
+				String imgFile = "./res/img/" + surroundingMines + ".png";
+				ImageIcon icon = new ImageIcon(imgFile);
+				setIcon(icon); // disabled icon only shown if icon is not null
+				setDisabledIcon(icon);
+			}
 		}
 		setEnabled(false);
 		

@@ -1,0 +1,8 @@
+1	blue	#0000FF
+2	green	#008000
+3	red	#FF0000
+4	purple	#800080
+5	maroon	#800000
+6	cyan	#00FFFF
+7	black	#000000
+8	gray	#808080
