@@ -26,15 +26,16 @@ public class MineFieldButton extends JButton {
 		this.row = row;
 		this.col = col;
 
+		setBackground(Color.GRAY);
 		if (mineField.hasMineAt(row, col)) {
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
 			setDisabledIcon(ImageLoader.createImageIcon("red_ball.png"));
 		}
-		else {
+		//else {
 			//setText(String.valueOf(mineField.getSurroundingMineCount(row, col)));
-			setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
-			setForeground(Color.BLUE);
-		}
+			//setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
+			//setForeground(Color.BLUE);
+		//}
 	}
 	
 	public int getRow() {
@@ -53,6 +54,8 @@ public class MineFieldButton extends JButton {
 		if (isCleared())
 			return;	// already cleared
 		
+		setBackground(Color.LIGHT_GRAY);
+
 		if (mineField.hasMineAt(row, col)) {
 			// show mine
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
