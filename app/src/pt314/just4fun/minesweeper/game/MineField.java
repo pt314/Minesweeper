@@ -7,10 +7,6 @@ import java.util.Random;
  */
 public class MineField {
 	
-	private static final int DEFAULT_ROWS = 10;
-	private static final int DEFAULT_COLS = 15;
-	private static final int DEFAULT_MINES = 20;
-
 	private int numRows;
 	private int numCols;
 	private int numMines;
@@ -35,10 +31,6 @@ public class MineField {
 		for (int r = 0; r < numRows; r++)
 			for (int c = 0; c < numCols; c++)
 				mineCounts[r][c] = getSurroundingMineCount(r, c);
-	}
-	
-	public MineField() {
-		this(DEFAULT_ROWS, DEFAULT_COLS, DEFAULT_MINES);
 	}
 	
 	public int getNumRows() {
