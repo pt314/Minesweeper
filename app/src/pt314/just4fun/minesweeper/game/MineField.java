@@ -9,7 +9,7 @@ public class MineField {
 	
 	private static final int DEFAULT_ROWS = 10;
 	private static final int DEFAULT_COLS = 15;
-	private static final int DEFAULT_MINES = 20;
+	private static final int DEFAULT_MINES = 25;
 
 	private int numRows;
 	private int numCols;
