@@ -2,6 +2,7 @@ package pt314.just4fun.minesweeper.gui;
 
 import java.awt.Color;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -26,6 +27,7 @@ public class MineFieldButton extends JButton {
 		this.col = col;
 
 		setBackground(Color.GRAY);
+		setBorder(BorderFactory.createRaisedBevelBorder());
 		if (mineField.hasMineAt(row, col)) {
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
 			setDisabledIcon(ImageLoader.createImageIcon("red_ball.png"));
@@ -54,6 +56,7 @@ public class MineFieldButton extends JButton {
 			return;	// already cleared
 		
 		setBackground(Color.LIGHT_GRAY);
+		setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
 		if (mineField.hasMineAt(row, col)) {
 			// show mine
