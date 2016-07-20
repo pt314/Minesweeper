@@ -4,36 +4,28 @@ import java.util.Random;
 
 /**
  * Rectangular mine field.
+ * 
+ * Note: this class is not thread safe, which is probably OK for this game.
  */
 public class MineField {
 	
 	private int numRows;
 	private int numCols;
-	private int numMines;
+	private int numMines; // TODO: remove?
 	
 	private MineFieldCell[][] mineField;
 	
-	private int[][] mineCounts;
-
-	public MineField(int numRows, int numCols, int numMines) {
+	public MineField(int numRows, int numCols) {
 		// Initialize member variables
 		this.numRows = numRows;
 		this.numCols = numCols;
-		this.numMines = numMines;
+		this.numMines = 0;
 
 		// Create mine field array
 		mineField = new MineFieldCell[numRows][numCols];
 		for (int r = 0; r < numRows; r++)
 			for (int c = 0; c < numCols; c++)
 				mineField[r][c] = new MineFieldCell();
-		
-		addRandomMines(numMines);
-		
-		// Pre-compute mine counts
-		mineCounts = new int[numRows][numCols];
-		for (int r = 0; r < numRows; r++)
-			for (int c = 0; c < numCols; c++)
-				mineCounts[r][c] = getSurroundingMineCount(r, c);
 	}
 	
 	public int getNumRows() {
@@ -48,30 +40,6 @@ public class MineField {
 		return numMines;
 	}
 
-	/**
-	 * Add mines at random locations.
-	 * 
-	 * TODO: prevent selecting the same location twice.
-	 */
-	private void addRandomMines(int numberOfMines) {
-		System.out.println("Desired number of mines: " + numberOfMines);
-		
-		Random rand = new Random();
-		for (int i = 0; i < numberOfMines; i++) {
-			int r = rand.nextInt(numRows);
-			int c = rand.nextInt(numCols);
-			mineField[r][c].setMine(true);
-		}
-		// update number of mines to reflect real number
-		numMines = 0;
-		for (int row = 0; row < numRows; row++)
-			for (int col = 0; col < numCols; col++)
-				if (mineField[row][col].isMine())
-					numMines++;
-
-		System.out.println("Real number of mines: " + numMines);
-	}
-	
 	/**
 	 * Returns the number of mines adjacent to the specified location.
 	 */
@@ -94,6 +62,15 @@ public class MineField {
 	 */
 	public boolean hasMineAt(int row, int col) {
 		return withinBounds(row, col) && mineField[row][col].isMine();
+	}
+
+	public void setMineAt(int row, int col, boolean mine) {
+		if (!withinBounds(row, col))
+			return;
+		if (!hasMineAt(row, col)) {
+			mineField[row][col].setMine(mine);
+			numMines++; // update number of mines to reflect real number
+		}
 	}
 
 	/**
