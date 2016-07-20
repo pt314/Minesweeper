@@ -11,7 +11,7 @@ public class MineField {
 	private int numCols;
 	private int numMines;
 	
-	private boolean[][] mineField;
+	private MineFieldCell[][] mineField;
 	
 	private int[][] mineCounts;
 
@@ -22,7 +22,10 @@ public class MineField {
 		this.numMines = numMines;
 
 		// Create mine field array
-		mineField = new boolean[numRows][numCols];
+		mineField = new MineFieldCell[numRows][numCols];
+		for (int r = 0; r < numRows; r++)
+			for (int c = 0; c < numCols; c++)
+				mineField[r][c] = new MineFieldCell();
 		
 		addRandomMines(numMines);
 		
@@ -57,13 +60,13 @@ public class MineField {
 		for (int i = 0; i < numberOfMines; i++) {
 			int r = rand.nextInt(numRows);
 			int c = rand.nextInt(numCols);
-			mineField[r][c] = true;
+			mineField[r][c].setMine(true);
 		}
 		// update number of mines to reflect real number
 		numMines = 0;
 		for (int row = 0; row < numRows; row++)
 			for (int col = 0; col < numCols; col++)
-				if (mineField[row][col])
+				if (mineField[row][col].isMine())
 					numMines++;
 
 		System.out.println("Real number of mines: " + numMines);
@@ -90,7 +93,7 @@ public class MineField {
 	 * If the location is out of bounds, it always returns false.
 	 */
 	public boolean hasMineAt(int row, int col) {
-		return withinBounds(row, col) && mineField[row][col];
+		return withinBounds(row, col) && mineField[row][col].isMine();
 	}
 
 	/**
