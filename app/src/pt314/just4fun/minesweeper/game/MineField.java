@@ -39,6 +39,12 @@ public class MineField {
 	public int getNumMines() {
 		return numMines;
 	}
+	
+	public MineFieldCell getCell(int row, int col) {
+		if (!withinBounds(row, col))
+			return null;
+		return mineField[row][col];
+	}
 
 	/**
 	 * Returns the number of mines adjacent to the specified location.
@@ -61,7 +67,7 @@ public class MineField {
 	 * If the location is out of bounds, it always returns false.
 	 */
 	public boolean hasMineAt(int row, int col) {
-		return withinBounds(row, col) && mineField[row][col].isMine();
+		return withinBounds(row, col) && mineField[row][col].isMined();
 	}
 
 	public void setMineAt(int row, int col, boolean mine) {

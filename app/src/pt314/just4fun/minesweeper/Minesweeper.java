@@ -9,7 +9,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
+import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.game.MineFieldGenerator;
 import pt314.just4fun.minesweeper.gui.MineFieldPanel;
@@ -20,7 +22,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 	private int numCols = 25;
 	private int numMines = 50;
 
-	private MineField mineField;
+	private Game game;
 
 	// menu bar and menus
     private JMenuBar menuBar;
@@ -65,8 +67,8 @@ public class Minesweeper extends JFrame implements ActionListener {
 	
 	// TODO: set mines after first space is cleared???
 	private void startNewGame() {
-		mineField = new MineFieldGenerator().generate(numRows, numCols, numMines);
-		JPanel board = new MineFieldPanel(mineField);
+		game = new Game(numRows, numCols, numMines);
+		JPanel board = new MineFieldPanel(game);
 		Container contentPane = getContentPane();
 		contentPane.removeAll();
 		contentPane.add(board);
@@ -87,6 +89,10 @@ public class Minesweeper extends JFrame implements ActionListener {
 	}
 	
     public static void main(String[] args) {
-		new Minesweeper();
+		SwingUtilities.invokeLater(new Runnable() {
+		    public void run() {
+				new Minesweeper();
+		    }
+		});
 	}
 }

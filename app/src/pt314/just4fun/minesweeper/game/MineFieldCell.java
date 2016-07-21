@@ -26,7 +26,7 @@ public class MineFieldCell {
 		this.cleared = false;
 	}
 	
-	public boolean isMine() {
+	public boolean isMined() {
 		return mine;
 	}
 	
