@@ -1,5 +1,11 @@
 package pt314.just4fun.minesweeper.game;
 
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
+
 public class Game {
 
 	public MineField mineField; // TODO: make private
@@ -12,28 +18,45 @@ public class Game {
 		// TODO: implement me
 	}
 
-	public void clear(int row, int col) {
-		MineFieldCell cell = mineField.getCell(row, col);
-		if (cell.isCleared())
-			return;	// already cleared
+	/**
+	 * Clears a cell and returns all the cells that get cleared.
+	 */
+	public Set<MineFieldCell> clear(int row, int col) {
 		
-		cell.clear();
-		if (cell.isMined())
-			return; // found mine -> game over
+		Set<MineFieldCell> cells = new HashSet<>();
 		
-		if (mineField.getSurroundingMineCount(row, col) == 0) {
-			for (int i = -1; i <= 1; i++) {
-				for (int j = -1; j <= 1; j++) {
-					int r_ = row + i;
-					int c_ = col + j;
-					if (!mineField.withinBounds(r_, c_))
-						continue;
-					if (mineField.hasMineAt(r_, c_))
-						continue;
-					clear(r_, c_);
+		MineFieldCell startCell = mineField.getCell(row, col);
+		if (startCell.isCleared())
+			return cells;	// already cleared
+		
+		// Clear starting cell
+		startCell.clear();
+		cells.add(startCell);
+		if (startCell.isMined())
+			return cells;	// found mine -> game over
+		
+		// Clear other cells
+		Set<MineFieldCell> clearedCells = new HashSet<>();
+		Queue<MineFieldCell> queue = new LinkedList<>();
+		queue.add(startCell);
+		while (!queue.isEmpty()) {
+			MineFieldCell cell = queue.poll();
+			cell.clear();
+			clearedCells.add(cell);
+			int r = cell.getRow();
+			int c = cell.getCol();
+			if (mineField.getSurroundingMineCount(r, c) == 0) {
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						MineFieldCell cell_ = mineField.getCell(r + i, c + j);
+						if (cell_ != null && !cell_.isCleared() && !cell_.isMined())
+							if (!clearedCells.contains(cell_))
+								queue.add(cell_);
+					}
 				}
 			}
 		}
+		return clearedCells;
 	}
 	
 	public boolean isOver() {

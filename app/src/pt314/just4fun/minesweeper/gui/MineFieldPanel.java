@@ -16,12 +16,13 @@ public class MineFieldPanel extends JPanel {
 	private static final int CELL_SIZE = 48;
 
 	private Game game = null;
+	private MineField mineField = null;
 
 	private MineFieldButton[][] mineFieldButtons = null;
 	
 	public MineFieldPanel(Game game) {
 		this.game = game;
-		MineField mineField = game.mineField;
+		this.mineField = game.mineField;
 		int numRows = mineField.getNumRows();
 		int numCols = mineField.getNumCols();
 		

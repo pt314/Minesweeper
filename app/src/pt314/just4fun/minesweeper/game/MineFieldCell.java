@@ -4,6 +4,10 @@ package pt314.just4fun.minesweeper.game;
  * A single cell in a mine field.
  */
 public class MineFieldCell {
+	
+	private int row;
+	
+	private int col;
 
 	/**
 	 * A cell can only be cleared if it is enabled.
@@ -20,10 +24,20 @@ public class MineFieldCell {
 	 */
 	private boolean mine;
 	
-	public MineFieldCell() {
+	public MineFieldCell(int row, int col) {
+		this.row = row;
+		this.col = col;
 		this.mine = false;
 		this.enabled = true;
 		this.cleared = false;
+	}
+	
+	public int getRow() {
+		return row;
+	}
+	
+	public int getCol() {
+		return col;
 	}
 	
 	public boolean isMined() {
@@ -48,5 +62,30 @@ public class MineFieldCell {
 	
 	public void clear() {
 		cleared = true;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + col;
+		result = prime * result + row;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MineFieldCell other = (MineFieldCell) obj;
+		if (col != other.col)
+			return false;
+		if (row != other.row)
+			return false;
+		return true;
 	}
 }

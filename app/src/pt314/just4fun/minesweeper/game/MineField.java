@@ -25,7 +25,7 @@ public class MineField {
 		mineField = new MineFieldCell[numRows][numCols];
 		for (int r = 0; r < numRows; r++)
 			for (int c = 0; c < numCols; c++)
-				mineField[r][c] = new MineFieldCell();
+				mineField[r][c] = new MineFieldCell(r, c);
 	}
 	
 	public int getNumRows() {
