@@ -19,8 +19,8 @@ import pt314.just4fun.minesweeper.gui.MineFieldPanel;
 public class Minesweeper extends JFrame implements ActionListener {
 
 	private int numRows = 10;
-	private int numCols = 25;
-	private int numMines = 50;
+	private int numCols = 15;
+	private int numMines = 15;
 
 	private Game game;
 

@@ -4,11 +4,13 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Set;
 
 import javax.swing.JPanel;
 
 import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
+import pt314.just4fun.minesweeper.game.MineFieldCell;
 import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldPanel extends JPanel {
@@ -49,14 +51,14 @@ public class MineFieldPanel extends JPanel {
 			return;
 		
 		// clear cell
-		game.clear(row, col);
+		Set<MineFieldCell> cells = game.clear(row, col);
 		
-		// update ui
-		// TODO: only update the cells that changed
-		for (int r = 0; r < mineField.getNumRows(); r++) {
-			for (int c = 0; c < mineField.getNumCols(); c++) {
-				if (mineField.getCell(r, c).isCleared())
-					mineFieldButtons[r][c].clear();
+		// update ui (only cells that changed)
+		for (MineFieldCell cell : cells) {
+			if (cell.isCleared()) {
+				int r = cell.getRow();
+				int c = cell.getCol();
+				mineFieldButtons[r][c].clear();
 			}
 		}
 	}
