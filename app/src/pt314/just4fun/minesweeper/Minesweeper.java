@@ -35,13 +35,13 @@ public class Minesweeper extends JFrame implements ActionListener {
     public Minesweeper() {
 		super("Just for fun Minesweeper game!");
 		
+		setResizable(false);
 		initMenus();
 		
 		startNewGame();
 		
-		pack();
-		setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setVisible(true);
 	}
 	
 	private void initMenus() {
