@@ -8,9 +8,15 @@ import java.util.Set;
 
 public class Game {
 
+	private boolean isOver;
+	
+	private boolean isWin;
+	
 	public MineField mineField; // TODO: make private
 
 	public Game(int rows, int cols, int mines) {
+		isOver = false;
+		isWin = false;
 		mineField = new MineFieldGenerator().generate(rows, cols, mines);
 	}
 	
@@ -32,8 +38,11 @@ public class Game {
 		// Clear starting cell
 		startCell.clear();
 		cells.add(startCell);
-		if (startCell.isMined())
+		if (startCell.isMined()) {
+			isOver = true;
+			isWin = false;
 			return cells;	// found mine -> game over
+		}
 		
 		// Clear other cells
 		Set<MineFieldCell> clearedCells = new HashSet<>();
@@ -60,10 +69,10 @@ public class Game {
 	}
 	
 	public boolean isOver() {
-		return false; // TODO: implement me
+		return isOver;
 	}
 	
 	public boolean isWin() {
-		return false; // TODO: implement me
+		return isWin;
 	}
 }

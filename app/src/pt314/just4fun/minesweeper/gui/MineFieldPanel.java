@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import pt314.just4fun.minesweeper.game.Game;
@@ -61,10 +62,31 @@ public class MineFieldPanel extends JPanel {
 				mineFieldButtons[r][c].clear();
 			}
 		}
+		
+		if (game.isOver()) {
+			disableButtons();
+			if (game.isWin()) {
+				JOptionPane.showMessageDialog(null, 
+						"Congratulations!  :)", "You won!",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			else {
+				JOptionPane.showMessageDialog(null, 
+						"Sorry :(", "You lost...",
+						JOptionPane.ERROR_MESSAGE);
+			}
+		}
+	}
+
+	private void disableButtons() {
+		for (int row = 0; row < mineField.getNumRows(); row++) {
+			for (int col = 0; col < mineField.getNumCols(); col++) {
+				mineFieldButtons[row][col].setEnabled(false);
+			}
+		}
 	}
 
 	private class GridButtonHandler implements ActionListener {
-
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			MineFieldButton button = (MineFieldButton) e.getSource();
@@ -79,6 +101,5 @@ public class MineFieldPanel extends JPanel {
 				clear(row, col);
 			}
 		}
-		
 	}
 }
