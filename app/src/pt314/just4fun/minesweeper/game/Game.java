@@ -68,9 +68,18 @@ public class Game {
 				}
 			}
 		}
+		if (isGameOver()) {
+			isOver = true;
+			isWin = true;
+		}
 		return clearedCells;
 	}
-	
+
+	private boolean isGameOver() {
+		int numberOfCells = mineField.getRows() * mineField.getCols();
+		return numberOfCells - mineField.getMineCount() == mineField.getClearedCellCount();
+	}
+
 	public boolean isOver() {
 		return isOver;
 	}
