@@ -1,7 +1,5 @@
 package pt314.just4fun.minesweeper.game;
 
-import java.util.Random;
-
 /**
  * Rectangular mine field.
  * 
@@ -9,84 +7,100 @@ import java.util.Random;
  */
 public class MineField {
 	
-	private int numRows;
-	private int numCols;
-	private int numMines; // TODO: remove?
+	private int rows;
+	private int cols;
 	
 	private MineFieldCell[][] mineField;
 	
-	public MineField(int numRows, int numCols) {
+	public MineField(int rows, int cols) {
 		// Initialize member variables
-		this.numRows = numRows;
-		this.numCols = numCols;
-		this.numMines = 0;
+		this.rows = rows;
+		this.cols = cols;
 
 		// Create mine field array
-		mineField = new MineFieldCell[numRows][numCols];
-		for (int r = 0; r < numRows; r++)
-			for (int c = 0; c < numCols; c++)
+		mineField = new MineFieldCell[rows][cols];
+		for (int r = 0; r < rows; r++)
+			for (int c = 0; c < cols; c++)
 				mineField[r][c] = new MineFieldCell(r, c);
 	}
 	
-	public int getNumRows() {
-		return numRows;
+	public int getRows() {
+		return rows;
 	}
 	
-	public int getNumCols() {
-		return numCols;
+	public int getCols() {
+		return cols;
 	}
 
-	public int getNumMines() {
-		return numMines;
-	}
-	
 	public MineFieldCell getCell(int row, int col) {
 		if (!withinBounds(row, col))
 			return null;
 		return mineField[row][col];
 	}
 
+	public boolean isMined(int row, int col) {
+		return withinBounds(row, col) && mineField[row][col].isMined();
+	}
+
+	public boolean isEnabled(int row, int col) {
+		return withinBounds(row, col) && mineField[row][col].isEnabled();
+	}
+
+	public boolean isCleared(int row, int col) {
+		return withinBounds(row, col) && mineField[row][col].isCleared();
+	}
+
 	/**
-	 * Returns the number of mines adjacent to the specified location.
+	 * Returns the total number of mines on this field.
 	 */
-	public int getSurroundingMineCount(int row, int col) {
+	public int getMineCount() {
 		int count = 0;
-		for (int i = -1; i <= 1; i++)
-			for (int j = -1; j <= 1; j++)
-				if (i != 0 || j != 0) {
-					int neighborRow = row + i;
-					int neighborCol = col + j;
-					if (hasMineAt(neighborRow, neighborCol))
-						count++;
-				}
+		for (int row = 0; row < rows; row++)
+			for (int col = 0; col < cols; col++)
+				if (getCell(row, col).isMined())
+					count++;
 		return count;
 	}
 
 	/**
-	 * Returns true if there is a mine at the specified location.
-	 * If the location is out of bounds, it always returns false.
+	 * Returns the number of mines on or around a cell.
 	 */
-	public boolean hasMineAt(int row, int col) {
-		return withinBounds(row, col) && mineField[row][col].isMined();
+	public int getMineCount(int row, int col) {
+		int count = 0;
+		for (int i = -1; i <= 1; i++)
+			for (int j = -1; j <= 1; j++)
+				if (isMined(row + i, col + j))
+					count++;
+		return count;
 	}
 
-	public void setMineAt(int row, int col, boolean mine) {
-		if (!withinBounds(row, col))
-			return;
-		if (!hasMineAt(row, col)) {
-			mineField[row][col].setMine(mine);
-			numMines++; // update number of mines to reflect real number
-		}
+	/**
+	 * Returns the total number of cells in this field.
+	 */
+	public int getCellCount() {
+		return rows * cols;
+	}
+
+	/**
+	 * Returns the total number of cleared cells in this field.
+	 */
+	public int getClearedCellCount() {
+		int n = 0;
+		for (int row = 0; row < rows; row++)
+			for (int col = 0; col < cols; col++)
+				if (isCleared(row, col))
+					n++;
+		return n;
 	}
 
 	/**
 	 * Returns true if the specified row and column
 	 * are within the boundaries of the mine field.
 	 */
-	public boolean withinBounds(int row, int col) {
-		if (row < 0 || row >= numRows)
+	private boolean withinBounds(int row, int col) {
+		if (row < 0 || row >= rows)
 			return false;
-		if (col < 0 || col >= numCols)
+		if (col < 0 || col >= cols)
 			return false;
 		return true;
 	}

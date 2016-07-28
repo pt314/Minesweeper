@@ -25,11 +25,11 @@ public class MineFieldGenerator {
 		// select locations with repetition, so the number may be less than specified
 		// TODO: update to select exactly numberOfMines mines
 		for (int i = 0; i < numberOfMines; i++) {
-			int row = rand.nextInt(field.getNumRows());
-			int col = rand.nextInt(field.getNumCols());
-			field.setMineAt(row, col, true);
+			int row = rand.nextInt(field.getRows());
+			int col = rand.nextInt(field.getCols());
+			field.getCell(row, col).setMine(true);
 		}
 
-		System.out.println("Real number of mines: " + field.getNumMines());
+		System.out.println("Real number of mines: " + field.getMineCount());
 	}
 }

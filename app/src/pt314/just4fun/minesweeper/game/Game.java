@@ -54,7 +54,7 @@ public class Game {
 			MineFieldCell cell = queue.poll();
 			int r = cell.getRow();
 			int c = cell.getCol();
-			if (mineField.getSurroundingMineCount(r, c) == 0) {
+			if (mineField.getMineCount(r, c) == 0) {
 				for (int i = -1; i <= 1; i++) {
 					for (int j = -1; j <= 1; j++) {
 						MineFieldCell cell_ = mineField.getCell(r + i, c + j);

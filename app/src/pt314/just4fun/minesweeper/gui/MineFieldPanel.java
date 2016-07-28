@@ -26,8 +26,8 @@ public class MineFieldPanel extends JPanel {
 	public MineFieldPanel(Game game) {
 		this.game = game;
 		this.mineField = game.mineField;
-		int numRows = mineField.getNumRows();
-		int numCols = mineField.getNumCols();
+		int numRows = mineField.getRows();
+		int numCols = mineField.getCols();
 		
 		GridLayout layout = new GridLayout(numRows, numCols);
 		setLayout(layout);
@@ -79,8 +79,8 @@ public class MineFieldPanel extends JPanel {
 	}
 
 	private void disableButtons() {
-		for (int row = 0; row < mineField.getNumRows(); row++) {
-			for (int col = 0; col < mineField.getNumCols(); col++) {
+		for (int row = 0; row < mineField.getRows(); row++) {
+			for (int col = 0; col < mineField.getCols(); col++) {
 				mineFieldButtons[row][col].setEnabled(false);
 			}
 		}

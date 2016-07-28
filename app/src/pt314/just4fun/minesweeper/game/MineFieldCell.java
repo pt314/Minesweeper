@@ -10,6 +10,11 @@ public class MineFieldCell {
 	private int col;
 
 	/**
+	 * A cell may or may not have a mine on it.
+	 */
+	private boolean mined;
+	
+	/**
 	 * A cell can only be cleared if it is enabled.
 	 */
 	private boolean enabled;
@@ -19,15 +24,10 @@ public class MineFieldCell {
 	 */
 	private boolean cleared;
 	
-	/**
-	 * A cell may or may not have a mine on it.
-	 */
-	private boolean mine;
-	
 	public MineFieldCell(int row, int col) {
 		this.row = row;
 		this.col = col;
-		this.mine = false;
+		this.mined = false;
 		this.enabled = true;
 		this.cleared = false;
 	}
@@ -41,11 +41,11 @@ public class MineFieldCell {
 	}
 	
 	public boolean isMined() {
-		return mine;
+		return mined;
 	}
 	
 	public void setMine(boolean mine) {
-		this.mine = mine;
+		this.mined = mine;
 	}
 
 	public boolean isEnabled() {

@@ -28,7 +28,7 @@ public class MineFieldButton extends JButton {
 
 		setBackground(Color.GRAY);
 		setBorder(BorderFactory.createRaisedBevelBorder());
-		if (mineField.hasMineAt(row, col)) {
+		if (mineField.isMined(row, col)) {
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
 			setDisabledIcon(ImageLoader.createImageIcon("red_ball.png"));
 		}
@@ -58,13 +58,13 @@ public class MineFieldButton extends JButton {
 		setBackground(Color.LIGHT_GRAY);
 		setBorder(BorderFactory.createLineBorder(Color.GRAY));
 
-		if (mineField.hasMineAt(row, col)) {
+		if (mineField.isMined(row, col)) {
 			// show mine
 			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
 		}
 		else {
 			// show number of surrounding mines
-			int surroundingMines = mineField.getSurroundingMineCount(row, col);
+			int surroundingMines = mineField.getMineCount(row, col);
 			//setText(surroundingMines == 0 ? "" : String.valueOf(surroundingMines));
 			if (surroundingMines > 0) {
 				String imgFile = "./res/img/" + surroundingMines + ".png";
