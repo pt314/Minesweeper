@@ -32,8 +32,8 @@ public class Game {
 		Set<MineFieldCell> cells = new HashSet<>();
 		
 		MineFieldCell startCell = mineField.getCell(row, col);
-		if (startCell.isCleared())
-			return cells;	// already cleared
+		if (startCell == null || startCell.isCleared())
+			return cells;	// null or already cleared
 		
 		// Clear starting cell
 		startCell.clear();
@@ -48,10 +48,10 @@ public class Game {
 		Set<MineFieldCell> clearedCells = new HashSet<>();
 		Queue<MineFieldCell> queue = new LinkedList<>();
 		queue.add(startCell);
+		startCell.clear();
+		clearedCells.add(startCell);
 		while (!queue.isEmpty()) {
 			MineFieldCell cell = queue.poll();
-			cell.clear();
-			clearedCells.add(cell);
 			int r = cell.getRow();
 			int c = cell.getCol();
 			if (mineField.getSurroundingMineCount(r, c) == 0) {
@@ -59,8 +59,11 @@ public class Game {
 					for (int j = -1; j <= 1; j++) {
 						MineFieldCell cell_ = mineField.getCell(r + i, c + j);
 						if (cell_ != null && !cell_.isCleared() && !cell_.isMined())
-							if (!clearedCells.contains(cell_))
+							if (!clearedCells.contains(cell_)) {
 								queue.add(cell_);
+								cell_.clear();
+								clearedCells.add(cell_);
+							}
 					}
 				}
 			}
