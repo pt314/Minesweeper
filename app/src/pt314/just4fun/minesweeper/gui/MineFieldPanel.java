@@ -59,7 +59,8 @@ public class MineFieldPanel extends JPanel {
 			if (cell.isCleared()) {
 				int r = cell.getRow();
 				int c = cell.getCol();
-				mineFieldButtons[r][c].clear();
+				cell.setEnabled(false);
+				mineFieldButtons[r][c].updateButtonUI();
 			}
 		}
 		
@@ -95,7 +96,7 @@ public class MineFieldPanel extends JPanel {
 			if ((e.getModifiers() & 
 					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
-				button.setIcon(ImageLoader.createImageIcon("red_ball.png"));
+				button.setIcon(ImageLoader.createImageIcon("blue_ball.png"));
 			}
 			else {
 				clear(row, col);

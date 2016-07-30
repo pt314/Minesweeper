@@ -52,8 +52,8 @@ public class MineFieldCell {
 		return enabled;
 	}
 	
-	public void enable() {
-		enabled = true;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public boolean isCleared() {

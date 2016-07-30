@@ -25,18 +25,7 @@ public class MineFieldButton extends JButton {
 		this.mineField = mineField;
 		this.row = row;
 		this.col = col;
-
-		setBackground(Color.GRAY);
-		setBorder(BorderFactory.createRaisedBevelBorder());
-		if (mineField.isMined(row, col)) {
-			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
-			setDisabledIcon(ImageLoader.createImageIcon("red_ball.png"));
-		}
-		//else {
-			//setText(String.valueOf(mineField.getSurroundingMineCount(row, col)));
-			//setFont(new Font("Arial", Font.PLAIN, FONT_SIZE));
-			//setForeground(Color.BLUE);
-		//}
+		updateButtonUI();
 	}
 	
 	public int getRow() {
@@ -54,27 +43,46 @@ public class MineFieldButton extends JButton {
 	public void clear() {
 		if (isCleared())
 			return;	// already cleared
+		cleared = true;
+		setEnabled(false);
+	}
+	
+	public void updateButtonUI() {
 		
-		setBackground(Color.LIGHT_GRAY);
-		setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		boolean enabled = mineField.isEnabled(row, col);
+		boolean cleared = mineField.isCleared(row, col);
+		boolean mined = mineField.isMined(row, col);
 
-		if (mineField.isMined(row, col)) {
-			// show mine
-			setIcon(ImageLoader.createImageIcon("blue_ball.png"));
+		// enabled
+		setEnabled(enabled);
+		
+		// border
+		if (!cleared) {
+			setBackground(Color.GRAY);
+			setBorder(BorderFactory.createRaisedBevelBorder());
 		}
 		else {
+			setBackground(Color.LIGHT_GRAY);
+			setBorder(BorderFactory.createLineBorder(Color.GRAY));
+		}
+		
+		// mines and mine counts
+		if (mined) {
+			// show mine
+			String imgFile = cleared ? "red_ball.png" : "blue_ball.png";
+			ImageIcon icon = ImageLoader.createImageIcon(imgFile);
+			setIcon(icon);
+			setDisabledIcon(icon);
+		}
+		else if (cleared) {
 			// show number of surrounding mines
-			int surroundingMines = mineField.getMineCount(row, col);
-			//setText(surroundingMines == 0 ? "" : String.valueOf(surroundingMines));
-			if (surroundingMines > 0) {
-				String imgFile = "./res/img/" + surroundingMines + ".png";
+			int mineCount = mineField.getMineCount(row, col);
+			if (mineCount > 0) {
+				String imgFile = "./res/img/" + mineCount + ".png";
 				ImageIcon icon = new ImageIcon(imgFile);
 				setIcon(icon); // disabled icon only shown if icon is not null
 				setDisabledIcon(icon);
 			}
 		}
-		setEnabled(false);
-		
-		cleared = true;	// clear
 	}
 }
