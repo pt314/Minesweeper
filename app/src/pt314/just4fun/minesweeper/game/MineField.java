@@ -46,6 +46,10 @@ public class MineField {
 		return withinBounds(row, col) && mineField[row][col].isEnabled();
 	}
 
+	public boolean isFlagged(int row, int col) {
+		return withinBounds(row, col) && mineField[row][col].isFlagged();
+	}
+
 	public boolean isCleared(int row, int col) {
 		return withinBounds(row, col) && mineField[row][col].isCleared();
 	}

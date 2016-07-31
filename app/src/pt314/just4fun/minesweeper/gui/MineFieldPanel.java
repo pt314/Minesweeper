@@ -96,7 +96,9 @@ public class MineFieldPanel extends JPanel {
 			if ((e.getModifiers() & 
 					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
-				button.setIcon(ImageLoader.createImageIcon("blue_ball.png"));
+				MineFieldCell cell = mineField.getCell(row, col);
+				cell.setFlagged(!cell.isFlagged());
+				button.updateButtonUI();
 			}
 			else {
 				clear(row, col);

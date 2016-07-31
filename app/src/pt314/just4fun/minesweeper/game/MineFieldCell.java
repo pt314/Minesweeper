@@ -20,6 +20,11 @@ public class MineFieldCell {
 	private boolean enabled;
 	
 	/**
+	 * A cell that has not been cleared can be flagged.
+	 */
+	private boolean flagged;
+	
+	/**
 	 * After a cell is cleared, it is possible to see if there is a mine on it.
 	 */
 	private boolean cleared;
@@ -56,12 +61,21 @@ public class MineFieldCell {
 		this.enabled = enabled;
 	}
 
+	public boolean isFlagged() {
+		return flagged;
+	}
+	
+	public void setFlagged(boolean flagged) {
+		this.flagged = flagged;
+	}
+
 	public boolean isCleared() {
 		return cleared;
 	}
 	
 	public void clear() {
 		cleared = true;
+		flagged = false;
 	}
 
 	@Override
