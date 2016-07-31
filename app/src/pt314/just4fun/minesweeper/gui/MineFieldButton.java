@@ -59,11 +59,11 @@ public class MineFieldButton extends JButton {
 		
 		// border
 		if (!cleared) {
-			setBackground(Color.GRAY);
+			setBackground(Color.LIGHT_GRAY);
 			setBorder(BorderFactory.createRaisedBevelBorder());
 		}
 		else {
-			setBackground(Color.LIGHT_GRAY);
+			setBackground(Color.WHITE);
 			setBorder(BorderFactory.createLineBorder(Color.GRAY));
 		}
 		
