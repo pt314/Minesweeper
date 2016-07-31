@@ -25,7 +25,7 @@ public class MineFieldButton extends JButton {
 		this.mineField = mineField;
 		this.row = row;
 		this.col = col;
-		updateButtonUI();
+		updateUI();
 	}
 	
 	public int getRow() {
@@ -47,7 +47,11 @@ public class MineFieldButton extends JButton {
 		setEnabled(false);
 	}
 	
-	public void updateButtonUI() {
+	public void updateUI() {
+		super.updateUI();
+		
+		if (mineField == null)
+			return;
 		
 		boolean mined = mineField.isMined(row, col);
 		boolean enabled = mineField.isEnabled(row, col);
@@ -68,10 +72,13 @@ public class MineFieldButton extends JButton {
 		}
 		
 		// flags, mines, and mine counts
+		String imgFolder = "./res/img/";
+		int size = Math.min(getWidth(), getHeight());
+		imgFolder += size < 64 ? "small/" : "normal/";
 		ImageIcon icon = null;
 		if (!cleared) {
 			if (flagged) {
-				String imgFile = "./res/img/flag.png";
+				String imgFile = imgFolder + "flag.png";
 				icon = new ImageIcon(imgFile);
 			}
 		}
@@ -82,7 +89,7 @@ public class MineFieldButton extends JButton {
 				// show number of surrounding mines
 				int mineCount = mineField.getMineCount(row, col);
 				if (mineCount > 0) {
-					String imgFile = "./res/img/" + mineCount + ".png";
+					String imgFile = imgFolder + mineCount + ".png";
 					icon = new ImageIcon(imgFile);
 				}
 			}

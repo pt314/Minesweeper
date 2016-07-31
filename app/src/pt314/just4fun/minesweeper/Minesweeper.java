@@ -22,7 +22,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 
 	private Game game;
 
-	// board size and numer of mines
+	// board size and number of mines
 	private int numRows;
 	private int numCols;
 	private int numMines;
@@ -41,7 +41,8 @@ public class Minesweeper extends JFrame implements ActionListener {
     public Minesweeper() {
 		super("Just for fun Minesweeper game!");
 		
-		setResizable(false);
+		// TODO: set resizable to false (true now for testing)
+		//setResizable(false);
 		initMenus();
 		
 		startNewGame();

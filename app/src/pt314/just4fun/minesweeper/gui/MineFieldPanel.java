@@ -16,7 +16,7 @@ import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldPanel extends JPanel {
 
-	private static final int CELL_SIZE = 48;
+	private static final int CELL_SIZE = 32;
 
 	private Game game = null;
 	private MineField mineField = null;
@@ -60,7 +60,7 @@ public class MineFieldPanel extends JPanel {
 				int r = cell.getRow();
 				int c = cell.getCol();
 				cell.setEnabled(false);
-				mineFieldButtons[r][c].updateButtonUI();
+				mineFieldButtons[r][c].updateUI();
 			}
 		}
 		
@@ -98,7 +98,7 @@ public class MineFieldPanel extends JPanel {
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
 				MineFieldCell cell = mineField.getCell(row, col);
 				cell.setFlagged(!cell.isFlagged());
-				button.updateButtonUI();
+				button.updateUI();
 			}
 			else {
 				clear(row, col);
