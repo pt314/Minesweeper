@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.game.MineFieldCell;
-import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldPanel extends JPanel {
 
@@ -63,20 +62,6 @@ public class MineFieldPanel extends JPanel {
 				mineFieldButtons[r][c].updateUI();
 			}
 		}
-		
-		if (game.isOver()) {
-			disableButtons();
-			if (game.isWin()) {
-				JOptionPane.showMessageDialog(null, 
-						"Congratulations!  :)", "You won!",
-						JOptionPane.ERROR_MESSAGE);
-			}
-			else {
-				JOptionPane.showMessageDialog(null, 
-						"Sorry :(", "You lost...",
-						JOptionPane.ERROR_MESSAGE);
-			}
-		}
 	}
 
 	private void disableButtons() {
@@ -93,15 +78,39 @@ public class MineFieldPanel extends JPanel {
 			MineFieldButton button = (MineFieldButton) e.getSource();
 			int row = button.getRow();
 			int col = button.getCol();
+			
+			// Ctrl + Shift + Click -> disable cell (testing for now)
 			if ((e.getModifiers() & 
 					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
 				MineFieldCell cell = mineField.getCell(row, col);
+				cell.setEnabled(!cell.isEnabled());
+				button.updateUI();
+			}
+			// Ctrl + Click -> toggle flag
+			else if ((e.getModifiers() & 
+					(ActionEvent.CTRL_MASK)) 
+					== (ActionEvent.CTRL_MASK)) {
+				MineFieldCell cell = mineField.getCell(row, col);
 				cell.setFlagged(!cell.isFlagged());
 				button.updateUI();
 			}
+			// Click -> clear cell
 			else {
 				clear(row, col);
+				if (game.isOver()) {
+					disableButtons();
+					if (game.isWin()) {
+						JOptionPane.showMessageDialog(MineFieldPanel.this,
+								"Congratulations!  :)", "You won!",
+								JOptionPane.ERROR_MESSAGE);
+					}
+					else {
+						JOptionPane.showMessageDialog(MineFieldPanel.this,
+								"Sorry :(", "You lost...",
+								JOptionPane.ERROR_MESSAGE);
+					}
+				}
 			}
 		}
 	}
