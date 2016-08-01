@@ -1,26 +1,37 @@
 package pt314.just4fun.minesweeper;
 
+import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.SwingUtilities;
+import javax.swing.Timer;
 
 import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.game.MineFieldGenerator;
 import pt314.just4fun.minesweeper.gui.MineFieldPanel;
+import pt314.just4fun.minesweeper.util.Time;
 
 public class Minesweeper extends JFrame implements ActionListener {
 
 	private Game game;
+	private Timer timer;
 
 	// board size and number of mines
 	private int numRows;
@@ -109,14 +120,46 @@ public class Minesweeper extends JFrame implements ActionListener {
 
 	// TODO: set mines after first space is cleared???
 	private void startNewGame() {
+		// init game
 		setGameDifficulty();
 		game = new Game(numRows, numCols, numMines);
-		JPanel board = new MineFieldPanel(game);
+		
+		// clear content pane
 		Container contentPane = getContentPane();
 		contentPane.removeAll();
-		contentPane.add(board);
+		contentPane.setLayout(new BorderLayout());
+
+		// add mine field panel
+		JPanel mineFieldPanel = new MineFieldPanel(game);
+		contentPane.add(mineFieldPanel, BorderLayout.CENTER);
+		
+		// add status panel
+		JPanel statusPanel = new JPanel();
+		statusPanel.setBackground(Color.BLACK);
+		final JLabel timeLabel = new JLabel("0");
+		timeLabel.setFont(new Font(Font.DIALOG, Font.BOLD, 32));
+		timeLabel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
+		timeLabel.setForeground(Color.WHITE);
+		statusPanel.add(timeLabel);
+		contentPane.add(statusPanel, BorderLayout.NORTH);
+
 		//contentPane.revalidate();
 		pack();
+		
+		// TODO: Make sure timer only runs after game starts and stops when game ends
+		timer = new Timer(10, new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				long time = game.getTime();
+				long millis = Time.timeMillis(time);
+				long seconds = Time.timeSeconds(time);
+				long minutes = Time.timeMinutes(time);
+				String timeString = String.format("%02d:%02d.%02d", minutes, seconds, millis / 10);
+				timeLabel.setText(timeString);
+				timeLabel.revalidate();
+			}
+		});
+		timer.start();
 	}
 
 	@Override

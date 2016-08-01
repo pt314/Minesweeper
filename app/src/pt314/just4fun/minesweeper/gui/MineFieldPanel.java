@@ -79,7 +79,7 @@ public class MineFieldPanel extends JPanel {
 			int row = button.getRow();
 			int col = button.getCol();
 			
-			// Ctrl + Shift + Click -> disable cell (testing for now)
+			// Ctrl + Shift + Click -> disable cell (experimental)
 			if ((e.getModifiers() & 
 					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {

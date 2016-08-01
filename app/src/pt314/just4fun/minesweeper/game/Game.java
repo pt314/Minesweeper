@@ -1,22 +1,23 @@
 package pt314.just4fun.minesweeper.game;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
+import pt314.just4fun.minesweeper.util.StopWatch;
+
 public class Game {
 
-	private boolean isOver;
-	
-	private boolean isWin;
+	private GameState gameState;
+
+	private StopWatch stopWatch;
 	
 	public MineField mineField; // TODO: make private
 
 	public Game(int rows, int cols, int mines) {
-		isOver = false;
-		isWin = false;
+		gameState = GameState.NEW;
+		stopWatch = new StopWatch();
 		mineField = new MineFieldGenerator().generate(rows, cols, mines);
 	}
 	
@@ -29,6 +30,9 @@ public class Game {
 	 */
 	public Set<MineFieldCell> clear(int row, int col) {
 		
+		if (gameState == GameState.NEW)
+			startGame();
+		
 		Set<MineFieldCell> cells = new HashSet<>();
 		
 		MineFieldCell startCell = mineField.getCell(row, col);
@@ -39,9 +43,8 @@ public class Game {
 		startCell.clear();
 		cells.add(startCell);
 		if (startCell.isMined()) {
-			isOver = true;
-			isWin = false;
-			return cells;	// found mine -> game over
+			endGame(false); // stepped on a mine -> game over
+			return cells;
 		}
 		
 		// Clear other cells
@@ -68,10 +71,8 @@ public class Game {
 				}
 			}
 		}
-		if (isGameOver()) {
-			isOver = true;
-			isWin = true;
-		}
+		if (isGameOver())
+			endGame(true); // all cells cleared
 		return clearedCells;
 	}
 
@@ -80,11 +81,25 @@ public class Game {
 		return numberOfCells - mineField.getMineCount() == mineField.getClearedCellCount();
 	}
 
-	public boolean isOver() {
-		return isOver;
+	public synchronized void startGame() {
+		stopWatch.start();
+		gameState = GameState.STARTED;
+	}
+
+	public synchronized void endGame(boolean win) {
+		stopWatch.stop();
+		gameState = win ? GameState.WIN : GameState.LOSE;
+	}
+
+	public synchronized boolean isOver() {
+		return gameState == GameState.WIN || gameState == GameState.LOSE;
 	}
 	
-	public boolean isWin() {
-		return isWin;
+	public synchronized boolean isWin() {
+		return gameState == GameState.WIN;
+	}
+	
+	public long getTime() {
+		return stopWatch.getTime();
 	}
 }
