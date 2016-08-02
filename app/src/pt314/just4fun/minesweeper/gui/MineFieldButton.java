@@ -47,6 +47,7 @@ public class MineFieldButton extends JButton {
 		setEnabled(false);
 	}
 	
+	// TODO: this is too expensive!!! creating icons every time...
 	public void updateUI() {
 		super.updateUI();
 		
@@ -63,7 +64,7 @@ public class MineFieldButton extends JButton {
 		
 		// border
 		if (!cleared) {
-			setBackground(Color.LIGHT_GRAY);
+			setBackground(enabled ? Color.LIGHT_GRAY : Color.GRAY);
 			setBorder(BorderFactory.createRaisedBevelBorder());
 		}
 		else {

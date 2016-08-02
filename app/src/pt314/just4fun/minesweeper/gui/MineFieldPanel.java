@@ -67,7 +67,23 @@ public class MineFieldPanel extends JPanel {
 	private void disableButtons() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
+				MineFieldCell cell = mineField.getCell(row, col);
+				cell.setEnabled(false);
 				mineFieldButtons[row][col].setEnabled(false);
+				mineFieldButtons[row][col].updateUI();
+			}
+		}
+	}
+
+	private void showMines() {
+		for (int row = 0; row < mineField.getRows(); row++) {
+			for (int col = 0; col < mineField.getCols(); col++) {
+				MineFieldCell cell = mineField.getCell(row, col);
+				if (cell.isMined()) {
+					cell.clear();
+					mineFieldButtons[row][col].clear();
+				}
+				mineFieldButtons[row][col].updateUI();
 			}
 		}
 	}
@@ -106,6 +122,7 @@ public class MineFieldPanel extends JPanel {
 								JOptionPane.ERROR_MESSAGE);
 					}
 					else {
+						showMines();
 						JOptionPane.showMessageDialog(MineFieldPanel.this,
 								"Sorry :(", "You lost...",
 								JOptionPane.ERROR_MESSAGE);
