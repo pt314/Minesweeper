@@ -1,14 +1,13 @@
 Minesweeper
 ===========
 
-Classic Minesweeper in Java.
+Minesweeper is a simple game, which became very popular on Windows. I really liked playing it and wanted to implement my own version, just for fun. So here it is, Classic Minesweeper in Java. (In progress...)
 
-I really liked the classic Minesweeper game and always wanted to implement my own version, so I'm doint that now, just for fun :)
+You can learn more about the game online:
 
-More details later...
-
-https://en.wikipedia.org/wiki/Microsoft_Minesweeper
-http://www.minesweeper.info/wiki/Windows_Minesweeper
+- https://en.wikipedia.org/wiki/Minesweeper_(video_game)
+- https://en.wikipedia.org/wiki/Microsoft_Minesweeper
+- http://www.minesweeper.info/wiki/Windows_Minesweeper
 
 
 Difficulty levels
@@ -18,3 +17,47 @@ Difficulty levels
 - Intermediate (16x16, 40 mines) -> mine density = 0.15625
 - Expert (24x24, 99 mines) -> mine density = 0.171875
 
+Game timer
+----------
+
+Keeping track of time is done inside the Game class.
+Time is displayed up to hundreds of a second.
+
+
+
+Some things I want to do
+------------------------
+
+Basic game:
+- Generate map after first cell is cleared (so player cannot lose on first move)
+- When generating board, place mines without repetition (to generate the exact number of mines)
+  - Make sure probability of each cell is the same
+- Show mines when game is over
+  - Show bad suspected mines (flags without mines)
+  - Show exploded mine with diff graphics than other mines
+- Add option to ? cells
+- Clear cells when flagged or "?-ed"?
+- Double click to clear all surrounding cells
+- Status bar
+  - Show number of mines (minus flags?)
+  - Max timer at 23:59:59.99 (unusual case)
+- Add menu shortcuts
+
+Dev stuff:
+- Cleanup code
+  - Move action listener out of MineFieldPanel
+- Add unit tests
+- Switch to netbeans (?)
+- Add build/run instructions
+- Add documentation + how to play
+
+Advanced:
+- Add option to remove/disarm mines
+- Add pathfinder game
+
+Optional:
+- Solver
+
+Etc:
++ Add different sizes (small, medium, large)
+  - Determine sizes to use...
