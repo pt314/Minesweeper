@@ -51,7 +51,7 @@ Basic game:
 - Status bar
   - Show number of mines (minus flags?)
   - Max timer at 23:59:59.99 (unusual case)
-- Add menu shortcuts
+OK - Add menu shortcuts
 
 Dev stuff:
 - Cleanup code
