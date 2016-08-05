@@ -82,6 +82,9 @@ public class MineFieldButton extends JButton {
 				String imgFile = imgFolder + "flag.png";
 				icon = new ImageIcon(imgFile);
 			}
+			else if (mined) {
+				icon = ImageLoader.createImageIcon("blue_ball.png");	
+			}
 		}
 		else {
 			if (mined)

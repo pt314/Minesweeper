@@ -9,16 +9,22 @@ import pt314.just4fun.minesweeper.util.StopWatch;
 
 public class Game {
 
+	// Used to add mines
+	private final MineFieldGenerator fieldGenerator = new MineFieldGenerator();
+	
 	private GameState gameState;
 
 	private StopWatch stopWatch;
 	
 	public MineField mineField; // TODO: make private
+	
+	private int numberOfMines;
 
 	public Game(int rows, int cols, int mines) {
 		gameState = GameState.NEW;
 		stopWatch = new StopWatch();
-		mineField = new MineFieldGenerator().generate(rows, cols, mines);
+		mineField = new MineField(rows, cols); // start with an empty field
+		numberOfMines = mines; // save the number of mines for later
 	}
 	
 	public void flag(int row, int col) {
@@ -30,8 +36,11 @@ public class Game {
 	 */
 	public Set<MineFieldCell> clear(int row, int col) {
 		
-		if (gameState == GameState.NEW)
+		if (gameState == GameState.NEW) {
+			// Add random mines, ignoring the first cell cleared
+			fieldGenerator.generate(mineField, numberOfMines, row, col);
 			startGame();
+		}
 		
 		Set<MineFieldCell> cells = new HashSet<>();
 		

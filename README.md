@@ -17,6 +17,16 @@ Difficulty levels
 - Intermediate (16x16, 40 mines) -> mine density = 0.15625
 - Expert (24x24, 99 mines) -> mine density = 0.171875
 
+Game start
+----------
+
+The game and timer start when the player clears the first cell.
+
+To prevent the player from losing on the first move, mines are placed after the first cell is cleared.
+
+To place the mines, a sample with uniform distribution is selected from all the cells excluding the first cleared cell.
+
+
 Game timer
 ----------
 
