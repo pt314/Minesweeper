@@ -123,14 +123,12 @@ public class MineFieldPanel extends JPanel {
 			}
 			// Alt + Click -> toggle flag
 			else if ((e.getModifiers() & (ActionEvent.ALT_MASK)) == (ActionEvent.ALT_MASK)) {
-				System.out.println("flag");
 				MineFieldCell cell = mineField.getCell(row, col);
 				cell.setFlagged(!cell.isFlagged());
 				button.updateUI();
 			}
 			// Ctrl + Click -> clear surrounding
 			else if ((e.getModifiers() & ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) {
-				System.out.println("chord");
 				clearSurrounding(row, col);
 			}
 			// Click -> clear cell

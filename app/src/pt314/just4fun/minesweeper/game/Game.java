@@ -90,14 +90,25 @@ public class Game {
 	 * Clears all the cells surrounding an empty cell and returns
 	 * all the cells that get cleared as a result of clearing the
 	 * starting cell.
+	 * 
+	 * Surrounding cells are only cleared if the starting cell has
+	 * been previously cleared and the number of surrounding flags
+	 * is equal to the number of surrounding mines.
 	 */
 	// TODO: make it safe -> only clear cells if number of flags = number of mines
 	public synchronized Set<MineFieldCell> clearSurrounding(int row, int col) {
 		
 		Set<MineFieldCell> cells = new HashSet<>();
 
+		// Ignore uncleared cells
 		MineFieldCell startCell = mineField.getCell(row, col);
-		if (startCell == null || !startCell.isCleared() || mineField.getMineCount(row, col) == 0)
+		if (startCell == null || !startCell.isCleared())
+			return cells;
+		
+		// Ignore if number of flags is incorrect
+		int mineCount = mineField.getMineCount(row, col);
+		int flagCount = mineField.getFlagCount(row, col);
+		if (mineCount != flagCount)
 			return cells;
 		
 		for (int i = -1; i <= 1; i++) {

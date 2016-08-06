@@ -30,9 +30,12 @@ To place the mines, a sample with uniform distribution is selected from all the 
 Player actions
 --------------
 
-- Clear cell: click
-- Toggle flag: Alt + click
-- Clear surrounding cells: Ctrl + click
+- Clear cell (click)
+
+- Toggle flag (Alt + click)
+
+- Clear surrounding cells (Ctrl + click):
+  Surrounding cells are only cleared if the starting cell has been previously cleared and the number of surrounding flags is equal to the number of surrounding mines.
 
 
 Game timer
