@@ -132,17 +132,17 @@ public class Minesweeper extends JFrame implements ActionListener {
 	 * Sets the size of the board and the number of mines.
 	 */
 	private void setGameDifficulty() {
-		if (smallFieldMI.isSelected()) {
+		if (easyMI.isSelected()) {
 			numRows = 8;
 			numCols = 8;
 			numMines = 10;
 		}
-		else if (mediumFieldMI.isSelected()) {
+		else if (mediumMI.isSelected()) {
 			numRows = 16;
 			numCols = 16;
 			numMines = 40;
 		}
-		else if (largeFieldMI.isSelected()) {
+		else if (hardMI.isSelected()) {
 			numRows = 24;
 			numCols = 24;
 			numMines = 99;
