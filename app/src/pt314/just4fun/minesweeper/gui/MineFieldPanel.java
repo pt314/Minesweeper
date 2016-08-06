@@ -64,6 +64,24 @@ public class MineFieldPanel extends JPanel {
 		}
 	}
 
+	private void clearSurrounding(int row, int col) {
+		if (mineFieldButtons[row][col].isCleared())
+			return;
+		
+		// clear cell
+		Set<MineFieldCell> cells = game.clearSurrounding(row, col);
+		
+		// update ui (only cells that changed)
+		for (MineFieldCell cell : cells) {
+			if (cell.isCleared()) {
+				int r = cell.getRow();
+				int c = cell.getCol();
+				cell.setEnabled(false);
+				mineFieldButtons[r][c].updateUI();
+			}
+		}
+	}
+
 	private void disableButtons() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
@@ -103,30 +121,36 @@ public class MineFieldPanel extends JPanel {
 				cell.setEnabled(!cell.isEnabled());
 				button.updateUI();
 			}
-			// Ctrl + Click -> toggle flag
-			else if ((e.getModifiers() & 
-					(ActionEvent.CTRL_MASK)) 
-					== (ActionEvent.CTRL_MASK)) {
+			// Alt + Click -> toggle flag
+			else if ((e.getModifiers() & (ActionEvent.ALT_MASK)) == (ActionEvent.ALT_MASK)) {
+				System.out.println("flag");
 				MineFieldCell cell = mineField.getCell(row, col);
 				cell.setFlagged(!cell.isFlagged());
 				button.updateUI();
 			}
+			// Ctrl + Click -> clear surrounding
+			else if ((e.getModifiers() & ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) {
+				System.out.println("chord");
+				clearSurrounding(row, col);
+			}
 			// Click -> clear cell
 			else {
 				clear(row, col);
-				if (game.isOver()) {
-					disableButtons();
-					if (game.isWin()) {
-						JOptionPane.showMessageDialog(MineFieldPanel.this,
-								"Congratulations!  :)", "You won!",
-								JOptionPane.ERROR_MESSAGE);
-					}
-					else {
-						showMines();
-						JOptionPane.showMessageDialog(MineFieldPanel.this,
-								"Sorry :(", "You lost...",
-								JOptionPane.ERROR_MESSAGE);
-					}
+			}
+
+			// Check if game is over
+			if (game.isOver()) {
+				disableButtons();
+				if (game.isWin()) {
+					JOptionPane.showMessageDialog(MineFieldPanel.this,
+							"Congratulations!  :)", "You won!",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				else {
+					showMines();
+					JOptionPane.showMessageDialog(MineFieldPanel.this,
+							"Sorry :(", "You lost...",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		}

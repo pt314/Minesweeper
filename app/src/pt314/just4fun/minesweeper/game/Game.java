@@ -32,9 +32,10 @@ public class Game {
 	}
 
 	/**
-	 * Clears a cell and returns all the cells that get cleared.
+	 * Clears a cell and returns all the cells that get cleared
+	 * as a result of clearing the starting cell.
 	 */
-	public Set<MineFieldCell> clear(int row, int col) {
+	public synchronized Set<MineFieldCell> clear(int row, int col) {
 		
 		if (gameState == GameState.NEW) {
 			// Add random mines, ignoring the first cell cleared
@@ -85,6 +86,32 @@ public class Game {
 		return clearedCells;
 	}
 
+	/**
+	 * Clears all the cells surrounding an empty cell and returns
+	 * all the cells that get cleared as a result of clearing the
+	 * starting cell.
+	 */
+	// TODO: make it safe -> only clear cells if number of flags = number of mines
+	public synchronized Set<MineFieldCell> clearSurrounding(int row, int col) {
+		
+		Set<MineFieldCell> cells = new HashSet<>();
+
+		MineFieldCell startCell = mineField.getCell(row, col);
+		if (startCell == null || !startCell.isCleared() || mineField.getMineCount(row, col) == 0)
+			return cells;
+		
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				MineFieldCell cell = mineField.getCell(row + i, col + j);
+				if (cell != null && !cell.isFlagged()) {
+					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
+					cells.addAll(clearedCells);
+				}
+			}
+		}
+		return cells;
+	}
+
 	private boolean isGameOver() {
 		int numberOfCells = mineField.getRows() * mineField.getCols();
 		return numberOfCells - mineField.getMineCount() == mineField.getClearedCellCount();
@@ -96,8 +123,10 @@ public class Game {
 	}
 
 	public synchronized void endGame(boolean win) {
-		stopWatch.stop();
-		gameState = win ? GameState.WIN : GameState.LOSE;
+		if (!isOver()) {
+			stopWatch.stop();
+			gameState = win ? GameState.WIN : GameState.LOSE;
+		}
 	}
 
 	public synchronized boolean isOver() {

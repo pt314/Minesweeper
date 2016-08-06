@@ -27,6 +27,14 @@ To prevent the player from losing on the first move, mines are placed after the 
 To place the mines, a sample with uniform distribution is selected from all the cells excluding the first cleared cell.
 
 
+Player actions
+--------------
+
+- Clear cell: click
+- Toggle flag: Alt + click
+- Clear surrounding cells: Ctrl + click
+
+
 Game timer
 ----------
 
@@ -39,9 +47,6 @@ Some things I want to do
 ------------------------
 
 Basic game:
-- Generate map after first cell is cleared (so player cannot lose on first move)
-- When generating board, place mines without repetition (to generate the exact number of mines)
-  - Make sure probability of each cell is the same
 - Show mines when game is over
   - Show bad suspected mines (flags without mines)
   - Show exploded mine with diff graphics than other mines
@@ -51,7 +56,6 @@ Basic game:
 - Status bar
   - Show number of mines (minus flags?)
   - Max timer at 23:59:59.99 (unusual case)
-OK - Add menu shortcuts
 
 Dev stuff:
 - Cleanup code
