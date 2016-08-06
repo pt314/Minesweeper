@@ -46,8 +46,8 @@ public class Game {
 		Set<MineFieldCell> cells = new HashSet<>();
 		
 		MineFieldCell startCell = mineField.getCell(row, col);
-		if (startCell == null || startCell.isCleared())
-			return cells;	// null or already cleared
+		if (startCell == null)
+			return cells;
 		
 		// Clear starting cell
 		startCell.clear();
@@ -111,6 +111,35 @@ public class Game {
 		if (mineCount != flagCount)
 			return cells;
 		
+		for (int i = -1; i <= 1; i++) {
+			for (int j = -1; j <= 1; j++) {
+				MineFieldCell cell = mineField.getCell(row + i, col + j);
+				if (cell != null && !cell.isFlagged()) {
+					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
+					cells.addAll(clearedCells);
+				}
+			}
+		}
+		return cells;
+	}
+
+	/**
+	 * Removed a mine from a cell, clears it and its surrounding cells,
+	 * and returns all the cells that get cleared as a result.
+	 */
+	public synchronized Set<MineFieldCell> removeMine(int row, int col) {
+
+		Set<MineFieldCell> cells = new HashSet<>();
+
+		// Ignore if cell is not mined
+		MineFieldCell startCell = mineField.getCell(row, col);
+		if (!startCell.isMined())
+			return cells;
+
+		// Remove mine
+		startCell.setMined(false);
+
+		// Clear surrounding cells
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				MineFieldCell cell = mineField.getCell(row + i, col + j);

@@ -47,9 +47,6 @@ public class MineFieldPanel extends JPanel {
 	}
 
 	private void clear(int row, int col) {
-		if (mineFieldButtons[row][col].isCleared())
-			return;
-		
 		// clear cell
 		Set<MineFieldCell> cells = game.clear(row, col);
 		
@@ -65,11 +62,23 @@ public class MineFieldPanel extends JPanel {
 	}
 
 	private void clearSurrounding(int row, int col) {
-		if (mineFieldButtons[row][col].isCleared())
-			return;
-		
-		// clear cell
+		// clear cells
 		Set<MineFieldCell> cells = game.clearSurrounding(row, col);
+		
+		// update ui (only cells that changed)
+		for (MineFieldCell cell : cells) {
+			if (cell.isCleared()) {
+				int r = cell.getRow();
+				int c = cell.getCol();
+				cell.setEnabled(false);
+				mineFieldButtons[r][c].updateUI();
+			}
+		}
+	}
+
+	private void removeMine(int row, int col) {
+		// remove mine
+		Set<MineFieldCell> cells = game.removeMine(row, col);
 		
 		// update ui (only cells that changed)
 		for (MineFieldCell cell : cells) {
@@ -113,13 +122,11 @@ public class MineFieldPanel extends JPanel {
 			int row = button.getRow();
 			int col = button.getCol();
 			
-			// Ctrl + Shift + Click -> disable cell (experimental)
+			// Ctrl + Shift + Click -> remove mine (experimental)
 			if ((e.getModifiers() & 
 					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
-				MineFieldCell cell = mineField.getCell(row, col);
-				cell.setEnabled(!cell.isEnabled());
-				button.updateUI();
+				removeMine(row, col);
 			}
 			// Alt + Click -> toggle flag
 			else if ((e.getModifiers() & (ActionEvent.ALT_MASK)) == (ActionEvent.ALT_MASK)) {

@@ -49,7 +49,7 @@ public class MineFieldCell {
 		return mined;
 	}
 	
-	public void setMine(boolean mine) {
+	public void setMined(boolean mine) {
 		this.mined = mine;
 	}
 

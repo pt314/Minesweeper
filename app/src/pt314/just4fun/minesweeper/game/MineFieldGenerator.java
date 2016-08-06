@@ -44,7 +44,7 @@ public class MineFieldGenerator {
 		// TODO: check for valid input
 		Set<MineFieldCell> cells = sample(field, mines);
 		for (MineFieldCell cell : cells)
-			cell.setMine(true);
+			cell.setMined(true);
 	}
 
 	// Add random mines to an existing field
@@ -52,7 +52,7 @@ public class MineFieldGenerator {
 		// TODO: check for valid input
 		Set<MineFieldCell> cells = sample(field, mines, row, col);
 		for (MineFieldCell cell : cells)
-			cell.setMine(true);
+			cell.setMined(true);
 	}
 
 	/**

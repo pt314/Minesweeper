@@ -37,6 +37,9 @@ Player actions
 - Clear surrounding cells (Ctrl + click):
   Surrounding cells are only cleared if the starting cell has been previously cleared and the number of surrounding flags is equal to the number of surrounding mines.
 
+- Remove mine (Ctrl + Shift + click):
+  Removes a mine from a cell, and clears the cell and other surrounding cells. Does nothing if cell is not mined.
+
 
 Game timer
 ----------
