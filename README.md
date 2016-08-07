@@ -75,7 +75,6 @@ Dev stuff:
 - Add documentation + how to play
 
 Advanced:
-- Add option to remove/disarm mines
 - Add pathfinder game
 
 Optional:

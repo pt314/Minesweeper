@@ -58,7 +58,8 @@ public class Minesweeper extends JFrame implements ActionListener {
     private JMenuItem exitMI;
     
     // option menu items
-    private JCheckBoxMenuItem questionMarkMI;
+    private JCheckBoxMenuItem allowQuestionMarksMI;
+    private JCheckBoxMenuItem allowRemovingMinesMI;
     
     // help menu items
     private JMenuItem aboutMI;
@@ -69,6 +70,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 		// Init options
 		options = new GameOptions();
 		options.setAllowQuestionMarks(true);
+		options.setAllowRemovingMines(false);
 
 		// TODO: set resizable to false (true now for testing)
 		//setResizable(false);
@@ -115,10 +117,15 @@ public class Minesweeper extends JFrame implements ActionListener {
         optionsMenu = new JMenu("Options");
         menuBar.add(optionsMenu);
 
-        questionMarkMI = new JCheckBoxMenuItem("Allow question marks");
-        questionMarkMI.setSelected(options.isAllowQuestionMarks());
-        questionMarkMI.addActionListener(this);
-        optionsMenu.add(questionMarkMI);
+        allowQuestionMarksMI = new JCheckBoxMenuItem("Allow question marks");
+        allowQuestionMarksMI.setSelected(options.isAllowQuestionMarks());
+        allowQuestionMarksMI.addActionListener(this);
+        optionsMenu.add(allowQuestionMarksMI);
+
+        allowRemovingMinesMI = new JCheckBoxMenuItem("Allow removing mines");
+        allowRemovingMinesMI.setSelected(options.isAllowRemovingMines());
+        allowRemovingMinesMI.addActionListener(this);
+        optionsMenu.add(allowRemovingMinesMI);
 
     	// create help menu
         helpMenu = new JMenu("Help");
@@ -222,10 +229,13 @@ public class Minesweeper extends JFrame implements ActionListener {
 		}
 		else if (mItem == exitMI) {
 			System.exit(0);
-		}		
-		else if (mItem == questionMarkMI) {
-			options.setAllowQuestionMarks(questionMarkMI.isSelected());
-		}		
+		}
+		else if (mItem == allowQuestionMarksMI) {
+			options.setAllowQuestionMarks(allowQuestionMarksMI.isSelected());
+		}
+		else if (mItem == allowRemovingMinesMI) {
+			options.setAllowRemovingMines(allowRemovingMinesMI.isSelected());
+		}
 		else if (mItem == aboutMI) {
 			JOptionPane.showMessageDialog(this,
 					"https://github.com/pt314/minesweeper", "About",

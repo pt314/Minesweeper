@@ -52,6 +52,7 @@ public class MineFieldPanel extends JPanel {
 
 	private void toggleMark(int row, int col) {
 		game.toggleMark(row, col);
+		// Ignore question mark if not allowed
 		if (!options.isAllowQuestionMarks())
 			if (mineField.getCell(row, col).isQuestionMarked())
 				game.toggleMark(row, col);
@@ -89,6 +90,10 @@ public class MineFieldPanel extends JPanel {
 	}
 
 	private void removeMine(int row, int col) {
+		// Ignore if option is disabled
+		if (!options.isAllowRemovingMines())
+			return;
+		
 		// remove mine
 		Set<MineFieldCell> cells = game.removeMine(row, col);
 		
