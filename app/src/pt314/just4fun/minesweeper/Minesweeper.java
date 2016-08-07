@@ -138,18 +138,25 @@ public class Minesweeper extends JFrame implements ActionListener {
         // keyboard shortcuts
         
         // mnemonics for navigating menus
-        gameMenu.setMnemonic(KeyEvent.VK_G); // (G)ame
-        easyMI.setMnemonic(KeyEvent.VK_B);	 // (B)eginner
-        mediumMI.setMnemonic(KeyEvent.VK_I); // (I)ntermediate	
-        hardMI.setMnemonic(KeyEvent.VK_E);	 // (E)xpert
-        exitMI.setMnemonic(KeyEvent.VK_X);	 // E(x)it
-        helpMenu.setMnemonic(KeyEvent.VK_H); // (H)elp
+        gameMenu.setMnemonic(KeyEvent.VK_G);	// (G)ame
+        easyMI.setMnemonic(KeyEvent.VK_B);		// (B)eginner
+        mediumMI.setMnemonic(KeyEvent.VK_I);	// (I)ntermediate	
+        hardMI.setMnemonic(KeyEvent.VK_E);		// (E)xpert
+        exitMI.setMnemonic(KeyEvent.VK_X);		// E(x)it
+        helpMenu.setMnemonic(KeyEvent.VK_H);	// (H)elp
+        optionsMenu.setMnemonic(KeyEvent.VK_O);	// (O)ptions
+        allowQuestionMarksMI.setMnemonic(KeyEvent.VK_Q);
+        allowRemovingMinesMI.setMnemonic(KeyEvent.VK_R);
         
         // accelerators to select options without going through the menus
         newGameMI.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.getKeyText(KeyEvent.VK_F2)));	// F2: new game
         aboutMI.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.getKeyText(KeyEvent.VK_F1)));	// F1: help/about
+        allowQuestionMarksMI.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.getKeyText(KeyEvent.VK_F3)));	// F3: allow question marks
+        allowRemovingMinesMI.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.getKeyText(KeyEvent.VK_F4)));	// F4: allow removing mines
 
         // set menu bar
         setJMenuBar(menuBar);
