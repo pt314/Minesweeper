@@ -66,11 +66,15 @@ public class Game {
 		}
 		
 		Set<MineFieldCell> cells = new HashSet<>();
-		
+
 		MineFieldCell startCell = mineField.getCell(row, col);
 		if (startCell == null)
 			return cells;
 		
+		// Ignore if cell is marked
+		if (startCell.isMarked())
+			return cells;
+
 		// Clear starting cell
 		startCell.clear();
 		cells.add(startCell);
@@ -93,12 +97,15 @@ public class Game {
 				for (int i = -1; i <= 1; i++) {
 					for (int j = -1; j <= 1; j++) {
 						MineFieldCell cell_ = mineField.getCell(r + i, c + j);
-						if (cell_ != null && !cell_.isCleared() && !cell_.isMined())
-							if (!clearedCells.contains(cell_)) {
-								queue.add(cell_);
-								cell_.clear();
-								clearedCells.add(cell_);
+						if (cell_ != null && !cell_.isCleared()) {
+							if (!cell_.isMined() && !cell_.isMarked()) {
+								if (!clearedCells.contains(cell_)) {
+									queue.add(cell_);
+									cell_.clear();
+									clearedCells.add(cell_);
+								}
 							}
+						}
 					}
 				}
 			}
@@ -136,7 +143,7 @@ public class Game {
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				MineFieldCell cell = mineField.getCell(row + i, col + j);
-				if (cell != null && !cell.isFlagged()) {
+				if (cell != null) {
 					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
 					cells.addAll(clearedCells);
 				}
@@ -146,8 +153,9 @@ public class Game {
 	}
 
 	/**
-	 * Removed a mine from a cell, clears it and its surrounding cells,
-	 * and returns all the cells that get cleared as a result.
+	 * Removed a mine from a cell, clears it and its surrounding cells
+	 * without mines, and returns all the cells that get cleared as a
+	 * result.
 	 */
 	public synchronized Set<MineFieldCell> removeMine(int row, int col) {
 
@@ -160,12 +168,13 @@ public class Game {
 
 		// Remove mine
 		startCell.setMined(false);
+		startCell.setMark(CellMark.NONE);
 
 		// Clear surrounding cells
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
 				MineFieldCell cell = mineField.getCell(row + i, col + j);
-				if (cell != null && !cell.isFlagged()) {
+				if (cell != null && !cell.isMined()) {
 					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
 					cells.addAll(clearedCells);
 				}

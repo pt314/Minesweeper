@@ -67,7 +67,13 @@ public class MineFieldCell {
 	}
 	
 	public void setMark(CellMark mark) {
+		if (mark == null)
+			throw new IllegalArgumentException("mark cannot be null");
 		this.mark = mark;
+	}
+
+	public boolean isMarked() {
+		return mark != CellMark.NONE;
 	}
 
 	public boolean isFlagged() {
