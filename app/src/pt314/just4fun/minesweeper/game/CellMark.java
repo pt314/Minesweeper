@@ -13,7 +13,7 @@ public enum CellMark {
 
 	/**
 	 * Flags may be used for cells where the player
-	 * believes there is a mine
+	 * believes there is a mine.
 	 */
 	FLAG,
 	

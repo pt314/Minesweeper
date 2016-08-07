@@ -34,6 +34,10 @@ Player actions
 
 - Toggle mark (Alt + click)
   Cycle between no mark, flag, and question mark.
+  Flags may be used for cells where the player believes there is a mine.
+  Question marks may be used for cells where the player believes there could be a mine, but is not sure if there is.
+  Note that allowing question marks makes it slower to remove a flag, so there is a menu option to enable or disable allowing question marks.
+  Flagged or question marked cells are not cleared.
 
 - Clear surrounding cells (Ctrl + click):
   Surrounding cells are only cleared if the starting cell has been previously cleared and the number of surrounding flags is equal to the number of surrounding mines.
@@ -57,8 +61,6 @@ Basic game:
 - Show mines when game is over
   - Show bad suspected mines (flags without mines)
   - Show exploded mine with diff graphics than other mines
-- Add option to ? cells
-- Clear cells when flagged or "?-ed"?
 - Double click to clear all surrounding cells
 - Status bar
   - Show number of mines (minus flags?)

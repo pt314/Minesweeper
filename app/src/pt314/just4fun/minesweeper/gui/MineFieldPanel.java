@@ -9,6 +9,7 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import pt314.just4fun.minesweeper.GameOptions;
 import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.game.MineFieldCell;
@@ -19,12 +20,15 @@ public class MineFieldPanel extends JPanel {
 
 	private Game game = null;
 	private MineField mineField = null;
-
+	
+	private GameOptions options = null;
+	
 	private MineFieldButton[][] mineFieldButtons = null;
 	
-	public MineFieldPanel(Game game) {
+	public MineFieldPanel(Game game, GameOptions options) {
 		this.game = game;
 		this.mineField = game.mineField;
+		this.options = options;
 		int numRows = mineField.getRows();
 		int numCols = mineField.getCols();
 		
@@ -48,6 +52,9 @@ public class MineFieldPanel extends JPanel {
 
 	private void toggleMark(int row, int col) {
 		game.toggleMark(row, col);
+		if (!options.isAllowQuestionMarks())
+			if (mineField.getCell(row, col).isQuestionMarked())
+				game.toggleMark(row, col);
 		mineFieldButtons[row][col].updateUI();
 	}
 

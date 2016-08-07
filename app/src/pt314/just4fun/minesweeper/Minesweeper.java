@@ -13,6 +13,7 @@ import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -33,6 +34,8 @@ import pt314.just4fun.minesweeper.util.Time;
 
 public class Minesweeper extends JFrame implements ActionListener {
 
+	private GameOptions options;
+	
 	private Game game;
 	private Timer timer;
 
@@ -44,6 +47,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 	// menu bar and menus
     private JMenuBar menuBar;
     private JMenu gameMenu;
+    private JMenu optionsMenu;
     private JMenu helpMenu;
     
     // game menu items
@@ -53,16 +57,23 @@ public class Minesweeper extends JFrame implements ActionListener {
     private JRadioButtonMenuItem hardMI;
     private JMenuItem exitMI;
     
+    // option menu items
+    private JCheckBoxMenuItem questionMarkMI;
+    
     // help menu items
     private JMenuItem aboutMI;
 
     public Minesweeper() {
 		super("Just for fun Minesweeper game!");
 		
+		// Init options
+		options = new GameOptions();
+		options.setAllowQuestionMarks(true);
+
 		// TODO: set resizable to false (true now for testing)
 		//setResizable(false);
 		initMenus();
-		
+
 		startNewGame();
 		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -99,6 +110,15 @@ public class Minesweeper extends JFrame implements ActionListener {
         exitMI = new JMenuItem("Exit");
         exitMI.addActionListener(this);
         gameMenu.add(exitMI);
+
+    	// create options menu
+        optionsMenu = new JMenu("Options");
+        menuBar.add(optionsMenu);
+
+        questionMarkMI = new JCheckBoxMenuItem("Allow question marks");
+        questionMarkMI.setSelected(options.isAllowQuestionMarks());
+        questionMarkMI.addActionListener(this);
+        optionsMenu.add(questionMarkMI);
 
     	// create help menu
         helpMenu = new JMenu("Help");
@@ -161,7 +181,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 		contentPane.setLayout(new BorderLayout());
 
 		// add mine field panel
-		JPanel mineFieldPanel = new MineFieldPanel(game);
+		JPanel mineFieldPanel = new MineFieldPanel(game, options);
 		contentPane.add(mineFieldPanel, BorderLayout.CENTER);
 		
 		// add status panel
@@ -203,13 +223,16 @@ public class Minesweeper extends JFrame implements ActionListener {
 		else if (mItem == exitMI) {
 			System.exit(0);
 		}		
+		else if (mItem == questionMarkMI) {
+			options.setAllowQuestionMarks(questionMarkMI.isSelected());
+		}		
 		else if (mItem == aboutMI) {
 			JOptionPane.showMessageDialog(this,
 					"https://github.com/pt314/minesweeper", "About",
 					JOptionPane.INFORMATION_MESSAGE);
-		}		
+		}
 	}
-	
+
     public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 		    public void run() {
