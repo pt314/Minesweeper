@@ -46,6 +46,11 @@ public class MineFieldPanel extends JPanel {
 		}
 	}
 
+	private void toggleMark(int row, int col) {
+		game.toggleMark(row, col);
+		mineFieldButtons[row][col].updateUI();
+	}
+
 	private void clear(int row, int col) {
 		// clear cell
 		Set<MineFieldCell> cells = game.clear(row, col);
@@ -128,11 +133,9 @@ public class MineFieldPanel extends JPanel {
 					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
 				removeMine(row, col);
 			}
-			// Alt + Click -> toggle flag
+			// Alt + Click -> toggle mark (flag/question mark)
 			else if ((e.getModifiers() & (ActionEvent.ALT_MASK)) == (ActionEvent.ALT_MASK)) {
-				MineFieldCell cell = mineField.getCell(row, col);
-				cell.setFlagged(!cell.isFlagged());
-				button.updateUI();
+				toggleMark(row, col);
 			}
 			// Ctrl + Click -> clear surrounding
 			else if ((e.getModifiers() & ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) {

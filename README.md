@@ -32,7 +32,8 @@ Player actions
 
 - Clear cell (click)
 
-- Toggle flag (Alt + click)
+- Toggle mark (Alt + click)
+  Cycle between no mark, flag, and question mark.
 
 - Clear surrounding cells (Ctrl + click):
   Surrounding cells are only cleared if the starting cell has been previously cleared and the number of surrounding flags is equal to the number of surrounding mines.

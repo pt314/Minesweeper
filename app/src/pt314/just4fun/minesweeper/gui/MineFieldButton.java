@@ -7,6 +7,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import pt314.just4fun.minesweeper.game.MineField;
+import pt314.just4fun.minesweeper.game.MineFieldCell;
 import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldButton extends JButton {
@@ -54,9 +55,9 @@ public class MineFieldButton extends JButton {
 		if (mineField == null)
 			return;
 		
+		MineFieldCell cell = mineField.getCell(row, col);
 		boolean mined = mineField.isMined(row, col);
 		boolean enabled = mineField.isEnabled(row, col);
-		boolean flagged = mineField.isFlagged(row, col);
 		boolean cleared = mineField.isCleared(row, col);
 
 		// enabled
@@ -78,13 +79,17 @@ public class MineFieldButton extends JButton {
 		imgFolder += size < 64 ? "small/" : "normal/";
 		ImageIcon icon = null;
 		if (!cleared) {
-			if (flagged) {
+			if (cell.isFlagged()) {
 				String imgFile = imgFolder + "flag.png";
 				icon = new ImageIcon(imgFile);
 			}
-			else if (mined) {
-				icon = ImageLoader.createImageIcon("blue_ball.png");	
+			else if (cell.isQuestionMarked()) {
+				String imgFile = imgFolder + "question-mark.png";
+				icon = new ImageIcon(imgFile);
 			}
+//			else if (mined) {
+//				icon = ImageLoader.createImageIcon("blue_ball.png");	
+//			}
 		}
 		else {
 			if (mined)

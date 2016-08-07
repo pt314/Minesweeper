@@ -26,9 +26,31 @@ public class Game {
 		mineField = new MineField(rows, cols); // start with an empty field
 		numberOfMines = mines; // save the number of mines for later
 	}
-	
-	public void flag(int row, int col) {
-		// TODO: implement me
+	/**
+	 * Toggle between possible marks on a cell.
+	 * 
+	 * @see CellMark
+	 */
+	public void toggleMark(int row, int col) {
+		
+		MineFieldCell cell = mineField.getCell(row, col);
+		if (cell == null || cell.isCleared())
+			return;
+		
+		CellMark mark = cell.getMark();
+		switch (mark) {
+			case NONE:
+				mark = CellMark.FLAG;
+				break;
+			case FLAG:
+				mark = CellMark.QUESTION_MARK;
+				break;
+			case QUESTION_MARK:
+			default:
+				mark = CellMark.NONE;
+				break;
+		}
+		cell.setMark(mark);
 	}
 
 	/**
