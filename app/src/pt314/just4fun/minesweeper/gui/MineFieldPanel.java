@@ -39,7 +39,7 @@ public class MineFieldPanel extends JPanel {
 		for (int r = 0; r < numRows; r++) {
 			for (int c = 0; c < numCols; c++) {
 				//JButton button = new JButton(r + " " + c);
-				MineFieldButton button = new MineFieldButton(mineField, r, c);
+				MineFieldButton button = new MineFieldButton(options, mineField, r, c);
 				mineFieldButtons[r][c] = button;
 				
 				button.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
@@ -127,6 +127,15 @@ public class MineFieldPanel extends JPanel {
 					cell.clear();
 					mineFieldButtons[row][col].clear();
 				}
+				mineFieldButtons[row][col].updateUI();
+			}
+		}
+	}
+
+	// update display
+	public void update() {
+		for (int row = 0; row < mineField.getRows(); row++) {
+			for (int col = 0; col < mineField.getCols(); col++) {
 				mineFieldButtons[row][col].updateUI();
 			}
 		}

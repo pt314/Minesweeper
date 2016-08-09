@@ -7,10 +7,12 @@ public class GameOptions {
 
 	private boolean allowQuestionMarks;
 	private boolean allowRemovingMines;
+	private boolean showHiddenMines;
 	
 	public GameOptions() {
 		this.allowQuestionMarks = true;
 		this.allowRemovingMines = false;
+		this.showHiddenMines = true;
 	}
 	
 	public boolean isAllowQuestionMarks() {
@@ -27,5 +29,13 @@ public class GameOptions {
 	
 	public void setAllowRemovingMines(boolean allow) {
 		this.allowRemovingMines = allow;
+	}
+	
+	public boolean isShowHiddenMines() {
+		return showHiddenMines;
+	}
+	
+	public void setShowHiddenMines(boolean show) {
+		this.showHiddenMines = show;
 	}
 }

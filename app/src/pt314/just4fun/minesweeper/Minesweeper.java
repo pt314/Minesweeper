@@ -39,6 +39,8 @@ public class Minesweeper extends JFrame implements ActionListener {
 	private Game game;
 	private Timer timer;
 
+	private MineFieldPanel mineFieldPanel;
+	
 	// board size and number of mines
 	private int numRows;
 	private int numCols;
@@ -60,6 +62,7 @@ public class Minesweeper extends JFrame implements ActionListener {
     // option menu items
     private JCheckBoxMenuItem allowQuestionMarksMI;
     private JCheckBoxMenuItem allowRemovingMinesMI;
+    private JCheckBoxMenuItem showHiddenMinesMI;
     
     // help menu items
     private JMenuItem aboutMI;
@@ -71,6 +74,7 @@ public class Minesweeper extends JFrame implements ActionListener {
 		options = new GameOptions();
 		options.setAllowQuestionMarks(true);
 		options.setAllowRemovingMines(false);
+		options.setShowHiddenMines(false);
 
 		// TODO: set resizable to false (true now for testing)
 		//setResizable(false);
@@ -127,6 +131,11 @@ public class Minesweeper extends JFrame implements ActionListener {
         allowRemovingMinesMI.addActionListener(this);
         optionsMenu.add(allowRemovingMinesMI);
 
+        showHiddenMinesMI = new JCheckBoxMenuItem("Show hidden mines");
+        showHiddenMinesMI.setSelected(options.isShowHiddenMines());
+        showHiddenMinesMI.addActionListener(this);
+        optionsMenu.add(showHiddenMinesMI);
+
     	// create help menu
         helpMenu = new JMenu("Help");
         menuBar.add(helpMenu);
@@ -157,6 +166,8 @@ public class Minesweeper extends JFrame implements ActionListener {
                 KeyEvent.getKeyText(KeyEvent.VK_F3)));	// F3: allow question marks
         allowRemovingMinesMI.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.getKeyText(KeyEvent.VK_F4)));	// F4: allow removing mines
+        showHiddenMinesMI.setAccelerator(KeyStroke.getKeyStroke(
+                KeyEvent.getKeyText(KeyEvent.VK_F5)));	// F5: show hidden mines
 
         // set menu bar
         setJMenuBar(menuBar);
@@ -242,6 +253,10 @@ public class Minesweeper extends JFrame implements ActionListener {
 		}
 		else if (mItem == allowRemovingMinesMI) {
 			options.setAllowRemovingMines(allowRemovingMinesMI.isSelected());
+		}
+		else if (mItem == showHiddenMinesMI) {
+			options.setShowHiddenMines(showHiddenMinesMI.isSelected());
+			mineFieldPanel.update();
 		}
 		else if (mItem == aboutMI) {
 			JOptionPane.showMessageDialog(this,
