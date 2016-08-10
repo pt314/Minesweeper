@@ -13,24 +13,20 @@ import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldButton extends JButton {
 
-	private static final int FONT_SIZE = 24;
-	
-	private GameOptions options;
-	
 	private MineField mineField;
 	
 	private int row;
 	
 	private int col;
 	
-	private boolean cleared = false;
+	private GameOptions options;
 	
-	public MineFieldButton(GameOptions options, MineField mineField, int row, int col) {
-		this.options = options;
+	public MineFieldButton(MineField mineField, int row, int col, GameOptions options) {
 		this.mineField = mineField;
 		this.row = row;
 		this.col = col;
-		updateUI();
+		this.options = options;
+		update();
 	}
 	
 	public int getRow() {
@@ -41,24 +37,12 @@ public class MineFieldButton extends JButton {
 		return col;
 	}
 	
-	public boolean isCleared() {
-		return cleared;
-	}
-
-	public void clear() {
-		if (isCleared())
-			return;	// already cleared
-		cleared = true;
-		setEnabled(false);
-	}
-	
 	// TODO: this is too expensive!!! creating icons every time...
-	public void updateUI() {
-		super.updateUI();
-		
+	public void update() {
+
 		if (mineField == null)
 			return;
-		
+
 		MineFieldCell cell = mineField.getCell(row, col);
 		boolean mined = mineField.isMined(row, col);
 		boolean enabled = mineField.isEnabled(row, col);

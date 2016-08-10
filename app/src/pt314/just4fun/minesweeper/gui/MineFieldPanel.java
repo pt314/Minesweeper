@@ -49,7 +49,7 @@ public class MineFieldPanel extends JPanel {
 		for (int r = 0; r < numRows; r++) {
 			for (int c = 0; c < numCols; c++) {
 				//JButton button = new JButton(r + " " + c);
-				MineFieldButton button = new MineFieldButton(options, mineField, r, c);
+				MineFieldButton button = new MineFieldButton(mineField, r, c, options);
 				mineFieldButtons[r][c] = button;
 				
 				button.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
@@ -66,7 +66,7 @@ public class MineFieldPanel extends JPanel {
 				MineFieldCell cell = mineField.getCell(row, col);
 				cell.setEnabled(false);
 				mineFieldButtons[row][col].setEnabled(false);
-				mineFieldButtons[row][col].updateUI();
+				mineFieldButtons[row][col].update();
 			}
 		}
 	}
@@ -75,11 +75,9 @@ public class MineFieldPanel extends JPanel {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
 				MineFieldCell cell = mineField.getCell(row, col);
-				if (cell.isMined()) {
+				if (cell.isMined())
 					cell.clear();
-					mineFieldButtons[row][col].clear();
-				}
-				mineFieldButtons[row][col].updateUI();
+				mineFieldButtons[row][col].update();
 			}
 		}
 	}
@@ -88,7 +86,7 @@ public class MineFieldPanel extends JPanel {
 	public void update() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
-				mineFieldButtons[row][col].updateUI();
+				mineFieldButtons[row][col].update();
 			}
 		}
 	}
@@ -98,7 +96,7 @@ public class MineFieldPanel extends JPanel {
 		for (MineFieldCell cell : cells) {
 			int row = cell.getRow();
 			int col = cell.getCol();
-			mineFieldButtons[row][col].updateUI();
+			mineFieldButtons[row][col].update();
 		}
 	}
 }
