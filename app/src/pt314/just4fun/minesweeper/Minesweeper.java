@@ -37,11 +37,6 @@ public class Minesweeper extends JFrame implements ActionListener {
 
 	private MineFieldPanel mineFieldPanel;
 	
-	// board size and number of mines
-	private int numRows;
-	private int numCols;
-	private int numMines;
-
 	// menu bar and menus
     private JMenuBar menuBar;
     private JMenu gameMenu;
@@ -105,7 +100,7 @@ public class Minesweeper extends JFrame implements ActionListener {
         hardMI = new JRadioButtonMenuItem("Expert");
         group.add(hardMI);
         gameMenu.add(hardMI);
-        easyMI.setSelected(true); // default to small
+        mediumMI.setSelected(true); // default to medium
 
         gameMenu.addSeparator();
 
@@ -173,27 +168,21 @@ public class Minesweeper extends JFrame implements ActionListener {
 	 * Sets the size of the board and the number of mines.
 	 */
 	private void setGameDifficulty() {
-		if (easyMI.isSelected()) {
-			numRows = 8;
-			numCols = 8;
-			numMines = 10;
-		}
-		else if (mediumMI.isSelected()) {
-			numRows = 16;
-			numCols = 16;
-			numMines = 40;
-		}
-		else if (hardMI.isSelected()) {
-			numRows = 24;
-			numCols = 24;
-			numMines = 99;
-		}
+		if (easyMI.isSelected())
+			options.setDifficulty(GameOptions.DIFFICULTY_EASY);
+		else if (mediumMI.isSelected())
+			options.setDifficulty(GameOptions.DIFFICULTY_MEDIUM);
+		else if (hardMI.isSelected())
+			options.setDifficulty(GameOptions.DIFFICULTY_HARD);
 	}
 
 	// TODO: set mines after first space is cleared???
 	private void startNewGame() {
 		// init game
 		setGameDifficulty();
+		int numRows = options.getNumberOfRows();
+		int numCols = options.getNumberOfColumns();
+		int numMines = options.getNumberOfMines();
 		game = new Game(numRows, numCols, numMines);
 		
 		// clear content pane
