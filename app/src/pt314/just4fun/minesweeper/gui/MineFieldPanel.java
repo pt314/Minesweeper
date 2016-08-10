@@ -1,13 +1,17 @@
 package pt314.just4fun.minesweeper.gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Set;
 
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 
 import pt314.just4fun.minesweeper.GameOptions;
 import pt314.just4fun.minesweeper.game.Game;
@@ -29,12 +33,23 @@ public class MineFieldPanel extends JPanel {
 		this.game = game;
 		this.mineField = game.mineField;
 		this.options = options;
+		
+		// Color and border
+		setBackground(Color.GRAY);
+		Border b1 = BorderFactory.createEmptyBorder(10, 10, 10, 10);
+		Border b2 = BorderFactory.createBevelBorder(BevelBorder.LOWERED);
+		Border b3 = BorderFactory.createEmptyBorder(5, 5, 5, 5);
+		Border b12 = BorderFactory.createCompoundBorder(b1, b2);
+		Border b123 = BorderFactory.createCompoundBorder(b12, b3);
+		setBorder(b123);
+		
+		// Create grid
 		int numRows = mineField.getRows();
 		int numCols = mineField.getCols();
-		
 		GridLayout layout = new GridLayout(numRows, numCols);
 		setLayout(layout);
 		
+		// Add buttons
 		mineFieldButtons = new MineFieldButton[numRows][numCols];
 		for (int r = 0; r < numRows; r++) {
 			for (int c = 0; c < numCols; c++) {
