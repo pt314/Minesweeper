@@ -26,6 +26,15 @@ public class Game {
 		mineField = new MineField(rows, cols); // start with an empty field
 		numberOfMines = mines; // save the number of mines for later
 	}
+
+	// field must be new (nothing cleared or flagged, etc.)
+	public Game(MineField field) {
+		gameState = GameState.NEW;
+		stopWatch = new StopWatch();
+		mineField = field;
+		numberOfMines = field.getMineCount(); // save the number of mines for later
+	}
+
 	/**
 	 * Toggle between possible marks on a cell.
 	 * 
@@ -61,7 +70,8 @@ public class Game {
 		
 		if (gameState == GameState.NEW) {
 			// Add random mines, ignoring the first cell cleared
-			fieldGenerator.generate(mineField, numberOfMines, row, col);
+			if (mineField.getMineCount() == 0)
+				fieldGenerator.generate(mineField, numberOfMines, row, col);
 			startGame();
 		}
 		
@@ -158,6 +168,13 @@ public class Game {
 	 * result.
 	 */
 	public synchronized Set<MineFieldCell> removeMine(int row, int col) {
+
+		if (gameState == GameState.NEW) {
+			// Add random mines, ignoring the first cell cleared
+			if (mineField.getMineCount() == 0)
+				fieldGenerator.generate(mineField, numberOfMines, row, col);
+			startGame();
+		}
 
 		Set<MineFieldCell> cells = new HashSet<>();
 
