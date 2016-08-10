@@ -3,12 +3,9 @@ package pt314.just4fun.minesweeper.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.Set;
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -22,17 +19,14 @@ public class MineFieldPanel extends JPanel {
 
 	private static final int CELL_SIZE = 32;
 
-	private Game game = null;
 	private MineField mineField = null;
-	
-	private GameOptions options = null;
 	
 	private MineFieldButton[][] mineFieldButtons = null;
 	
+	private MineFieldButtonHandler buttonHandler = null;
+	
 	public MineFieldPanel(Game game, GameOptions options) {
-		this.game = game;
 		this.mineField = game.mineField;
-		this.options = options;
 		
 		// Color and border
 		setBackground(Color.GRAY);
@@ -50,6 +44,7 @@ public class MineFieldPanel extends JPanel {
 		setLayout(layout);
 		
 		// Add buttons
+		buttonHandler = new MineFieldButtonHandler(game, options, this);
 		mineFieldButtons = new MineFieldButton[numRows][numCols];
 		for (int r = 0; r < numRows; r++) {
 			for (int c = 0; c < numCols; c++) {
@@ -58,72 +53,14 @@ public class MineFieldPanel extends JPanel {
 				mineFieldButtons[r][c] = button;
 				
 				button.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
-				button.addActionListener(new GridButtonHandler());
+				button.addActionListener(buttonHandler);
 				
 				add(button);
 			}
 		}
 	}
 
-	private void toggleMark(int row, int col) {
-		game.toggleMark(row, col);
-		// Ignore question mark if not allowed
-		if (!options.isAllowQuestionMarks())
-			if (mineField.getCell(row, col).isQuestionMarked())
-				game.toggleMark(row, col);
-		mineFieldButtons[row][col].updateUI();
-	}
-
-	private void clear(int row, int col) {
-		// clear cell
-		Set<MineFieldCell> cells = game.clear(row, col);
-		
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells) {
-			if (cell.isCleared()) {
-				int r = cell.getRow();
-				int c = cell.getCol();
-				cell.setEnabled(false);
-				mineFieldButtons[r][c].updateUI();
-			}
-		}
-	}
-
-	private void clearSurrounding(int row, int col) {
-		// clear cells
-		Set<MineFieldCell> cells = game.clearSurrounding(row, col);
-		
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells) {
-			if (cell.isCleared()) {
-				int r = cell.getRow();
-				int c = cell.getCol();
-				cell.setEnabled(false);
-				mineFieldButtons[r][c].updateUI();
-			}
-		}
-	}
-
-	private void removeMine(int row, int col) {
-		// Ignore if option is disabled
-		if (!options.isAllowRemovingMines())
-			return;
-		
-		// remove mine
-		Set<MineFieldCell> cells = game.removeMine(row, col);
-		
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells) {
-			if (cell.isCleared()) {
-				int r = cell.getRow();
-				int c = cell.getCol();
-				cell.setEnabled(false);
-				mineFieldButtons[r][c].updateUI();
-			}
-		}
-	}
-
-	private void disableButtons() {
+	public void disableButtons() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
 				MineFieldCell cell = mineField.getCell(row, col);
@@ -134,7 +71,7 @@ public class MineFieldPanel extends JPanel {
 		}
 	}
 
-	private void showMines() {
+	public void showMines() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
 				MineFieldCell cell = mineField.getCell(row, col);
@@ -147,7 +84,7 @@ public class MineFieldPanel extends JPanel {
 		}
 	}
 
-	// update display
+	// update display - all cells
 	public void update() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
@@ -156,47 +93,12 @@ public class MineFieldPanel extends JPanel {
 		}
 	}
 
-	private class GridButtonHandler implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			MineFieldButton button = (MineFieldButton) e.getSource();
-			int row = button.getRow();
-			int col = button.getCol();
-			
-			// Ctrl + Shift + Click -> remove mine (experimental)
-			if ((e.getModifiers() & 
-					(ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) 
-					== (ActionEvent.SHIFT_MASK + ActionEvent.CTRL_MASK)) {
-				removeMine(row, col);
-			}
-			// Alt + Click -> toggle mark (flag/question mark)
-			else if ((e.getModifiers() & (ActionEvent.ALT_MASK)) == (ActionEvent.ALT_MASK)) {
-				toggleMark(row, col);
-			}
-			// Ctrl + Click -> clear surrounding
-			else if ((e.getModifiers() & ActionEvent.CTRL_MASK) == ActionEvent.CTRL_MASK) {
-				clearSurrounding(row, col);
-			}
-			// Click -> clear cell
-			else {
-				clear(row, col);
-			}
-
-			// Check if game is over
-			if (game.isOver()) {
-				disableButtons();
-				if (game.isWin()) {
-					JOptionPane.showMessageDialog(MineFieldPanel.this,
-							"Congratulations!  :)", "You won!",
-							JOptionPane.ERROR_MESSAGE);
-				}
-				else {
-					showMines();
-					JOptionPane.showMessageDialog(MineFieldPanel.this,
-							"Sorry :(", "You lost...",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
+	// update display - specific cells
+	public void update(Set<MineFieldCell> cells) {
+		for (MineFieldCell cell : cells) {
+			int row = cell.getRow();
+			int col = cell.getCol();
+			mineFieldButtons[row][col].updateUI();
 		}
 	}
 }
