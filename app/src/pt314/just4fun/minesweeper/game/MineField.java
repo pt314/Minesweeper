@@ -79,6 +79,18 @@ public class MineField {
 	}
 
 	/**
+	 * Returns the total number of flags on this field.
+	 */
+	public int getFlagCount() {
+		int count = 0;
+		for (int row = 0; row < rows; row++)
+			for (int col = 0; col < cols; col++)
+				if (getCell(row, col).isFlagged())
+					count++;
+		return count;
+	}
+
+	/**
 	 * Returns the number of flags on or around a cell.
 	 */
 	public int getFlagCount(int row, int col) {

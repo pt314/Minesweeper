@@ -52,6 +52,13 @@ Game timer
 Keeping track of time is done inside the Game class.
 Time is displayed up to hundreds of a second.
 
+Number of mines
+---------------
+
+Display the number of mines left to discover. That is, the number of mines minus the number of flags.
+This can be negative if there are more flags than mines.
+
+
 
 
 Some things I want to do
