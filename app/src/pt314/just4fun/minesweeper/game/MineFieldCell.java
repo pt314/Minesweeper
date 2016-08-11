@@ -1,9 +1,11 @@
 package pt314.just4fun.minesweeper.game;
 
+import java.util.Observable;
+
 /**
  * A single cell in a mine field.
  */
-public class MineFieldCell {
+public class MineFieldCell extends Observable {
 	
 	private int row;
 	
@@ -52,6 +54,8 @@ public class MineFieldCell {
 	
 	public void setMined(boolean mine) {
 		this.mined = mine;
+		setChanged();
+		notifyObservers();
 	}
 
 	public boolean isEnabled() {
@@ -60,6 +64,8 @@ public class MineFieldCell {
 	
 	public void setEnabled(boolean enabled) {
 		this.enabled = enabled;
+		setChanged();
+		notifyObservers();
 	}
 
 	public CellMark getMark() {
@@ -70,6 +76,8 @@ public class MineFieldCell {
 		if (mark == null)
 			throw new IllegalArgumentException("mark cannot be null");
 		this.mark = mark;
+		setChanged();
+		notifyObservers();
 	}
 
 	public boolean isMarked() {
@@ -90,6 +98,7 @@ public class MineFieldCell {
 	
 	public void clear() {
 		cleared = true;
+		enabled = false;
 		mark = CellMark.NONE;
 		setChanged();
 		notifyObservers();

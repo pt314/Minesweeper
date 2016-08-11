@@ -1,6 +1,8 @@
 package pt314.just4fun.minesweeper.gui;
 
 import java.awt.Color;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -11,7 +13,7 @@ import pt314.just4fun.minesweeper.game.MineField;
 import pt314.just4fun.minesweeper.game.MineFieldCell;
 import pt314.just4fun.minesweeper.images.ImageLoader;
 
-public class MineFieldButton extends JButton {
+public class MineFieldButton extends JButton implements Observer {
 
 	private MineField mineField;
 	
@@ -93,5 +95,10 @@ public class MineFieldButton extends JButton {
 		}
 		setIcon(icon);
 		setDisabledIcon(icon); // disabled icon only shown if icon is not null
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		update();		
 	}
 }

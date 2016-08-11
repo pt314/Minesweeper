@@ -52,6 +52,9 @@ public class MineFieldPanel extends JPanel {
 				MineFieldButton button = new MineFieldButton(mineField, r, c, options);
 				mineFieldButtons[r][c] = button;
 				
+				// Each button observes the corresponding cell
+				mineField.getCell(r, c).addObserver(button);
+				
 				button.setPreferredSize(new Dimension(CELL_SIZE, CELL_SIZE));
 				button.addActionListener(buttonHandler);
 				
@@ -88,15 +91,6 @@ public class MineFieldPanel extends JPanel {
 			for (int col = 0; col < mineField.getCols(); col++) {
 				mineFieldButtons[row][col].update();
 			}
-		}
-	}
-
-	// update display - specific cells
-	public void update(Set<MineFieldCell> cells) {
-		for (MineFieldCell cell : cells) {
-			int row = cell.getRow();
-			int col = cell.getCol();
-			mineFieldButtons[row][col].update();
 		}
 	}
 }

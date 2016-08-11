@@ -2,14 +2,11 @@ package pt314.just4fun.minesweeper.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.swing.JOptionPane;
 
 import pt314.just4fun.minesweeper.GameOptions;
 import pt314.just4fun.minesweeper.game.Game;
-import pt314.just4fun.minesweeper.game.MineFieldCell;
 
 public class MineFieldButtonHandler implements ActionListener {
 	
@@ -75,31 +72,14 @@ public class MineFieldButtonHandler implements ActionListener {
 		if (!options.isAllowQuestionMarks())
 			if (game.mineField.getCell(row, col).isQuestionMarked())
 				game.toggleMark(row, col);
-		Set<MineFieldCell> cells = new HashSet<>();
-		cells.add(game.mineField.getCell(row, col));
-		mineFieldPanel.update(cells);
 	}
 
 	private void clear(int row, int col) {
-		// clear cell
-		Set<MineFieldCell> cells = game.clear(row, col);
-		
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells)
-			if (cell.isCleared())
-				cell.setEnabled(false);
-		mineFieldPanel.update(cells);
+		game.clear(row, col);
 	}
 
 	private void clearSurrounding(int row, int col) {
-		// clear cells
-		Set<MineFieldCell> cells = game.clearSurrounding(row, col);
-
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells)
-			if (cell.isCleared())
-				cell.setEnabled(false);
-		mineFieldPanel.update(cells);
+		game.clearSurrounding(row, col);
 	}
 
 	private void removeMine(int row, int col) {
@@ -108,12 +88,6 @@ public class MineFieldButtonHandler implements ActionListener {
 			return;
 
 		// remove mine
-		Set<MineFieldCell> cells = game.removeMine(row, col);
-
-		// update ui (only cells that changed)
-		for (MineFieldCell cell : cells)
-			if (cell.isCleared())
-				cell.setEnabled(false);
-		mineFieldPanel.update(cells);
+		game.removeMine(row, col);
 	}
 }
