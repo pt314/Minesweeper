@@ -261,11 +261,32 @@ public class Minesweeper extends JFrame implements ActionListener {
 			options.setAllowQuestionMarks(allowQuestionMarksMI.isSelected());
 		}
 		else if (mItem == allowRemovingMinesMI) {
-			options.setAllowRemovingMines(allowRemovingMinesMI.isSelected());
+			// This makes the game too easy, so ask for confirmation
+			if (allowRemovingMinesMI.isSelected()) {
+				int confirm = JOptionPane.showConfirmDialog(this,
+						"Are you sure you want to allow removing mines?",
+						"Removing mines", JOptionPane.YES_NO_OPTION);
+				if (confirm != JOptionPane.YES_OPTION)
+					allowRemovingMinesMI.setSelected(false);;
+			}
+			// Only update if changed
+			if (allowRemovingMinesMI.isSelected() != options.isAllowRemovingMines())
+				options.setAllowRemovingMines(allowRemovingMinesMI.isSelected());
 		}
 		else if (mItem == showHiddenMinesMI) {
-			options.setShowHiddenMines(showHiddenMinesMI.isSelected());
-			mineFieldPanel.update();
+			// This makes the game too easy, so ask for confirmation
+			if (showHiddenMinesMI.isSelected()) {
+				int confirm = JOptionPane.showConfirmDialog(this,
+						"Are you sure you want to show all hidden mines?",
+						"Show mines", JOptionPane.YES_NO_OPTION);
+				if (confirm != JOptionPane.YES_OPTION)
+					showHiddenMinesMI.setSelected(false);;
+			}
+			// Only update if changed
+			if (showHiddenMinesMI.isSelected() != options.isShowHiddenMines()) {
+				options.setShowHiddenMines(showHiddenMinesMI.isSelected());
+				mineFieldPanel.update();
+			}
 		}
 		else if (mItem == aboutMI) {
 			JOptionPane.showMessageDialog(this,
