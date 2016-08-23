@@ -85,6 +85,8 @@ public class MineFieldButton extends JButton implements Observer {
 		else {
 			if (mined) {
 				String imgFile = imgFolder + "mine-red.png";
+				if (!cell.isBlown())
+					imgFile = imgFolder + "mine-dark-gray.png";
 				icon = new ImageIcon(imgFile);
 			}
 			else {

@@ -10,12 +10,17 @@ public class MineFieldCell extends Observable {
 	private int row;
 	
 	private int col;
-
+	
 	/**
 	 * A cell may or may not have a mine on it.
 	 */
 	private boolean mined;
 	
+	/**
+	 * A cell with a with a mine can blow up when it is cleared.
+	 */
+	private boolean blown;
+
 	/**
 	 * A cell can only be cleared if it is enabled.
 	 */
@@ -35,6 +40,7 @@ public class MineFieldCell extends Observable {
 		this.row = row;
 		this.col = col;
 		this.mined = false;
+		this.blown = false;
 		this.enabled = true;
 		this.cleared = false;
 		this.mark = CellMark.NONE;
@@ -57,7 +63,17 @@ public class MineFieldCell extends Observable {
 		setChanged();
 		notifyObservers();
 	}
+	
+	public boolean isBlown() {
+		return blown;
+	}
 
+	public void setBlown(boolean blown) {
+		this.blown = blown;
+		setChanged();
+		notifyObservers();
+	}
+	
 	public boolean isEnabled() {
 		return enabled;
 	}

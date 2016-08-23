@@ -89,6 +89,7 @@ public class Game {
 		startCell.clear();
 		cells.add(startCell);
 		if (startCell.isMined()) {
+			startCell.setBlown(true);
 			endGame(false); // stepped on a mine -> game over
 			return cells;
 		}

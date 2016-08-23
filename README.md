@@ -51,6 +51,14 @@ Game timer
 
 Keeping track of time is done inside the Game class.
 Time is displayed up to hundreds of a second.
+The timer display is maxed at 59:59.99.
+
+Game end
+--------
+
+The game ends when the player clears all the cells without mines (win), or clears a cell with a mine (lose).
+When the game ends, all mines are shown. Mines that blow up are shown in red, and other mines in gray.
+
 
 Number of mines
 ---------------

@@ -52,13 +52,13 @@ public class MineFieldButtonHandler implements ActionListener {
 		// Check if game is over
 		if (game.isOver()) {
 			mineFieldPanel.disableButtons();
+			mineFieldPanel.showMines();
 			if (game.isWin()) {
 				JOptionPane.showMessageDialog(mineFieldPanel,
 						"Congratulations!  :)", "You won!",
 						JOptionPane.ERROR_MESSAGE);
 			}
 			else {
-				mineFieldPanel.showMines();
 				JOptionPane.showMessageDialog(mineFieldPanel,
 						"Sorry :(", "You lost...",
 						JOptionPane.ERROR_MESSAGE);
