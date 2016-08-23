@@ -210,9 +210,9 @@ public class Minesweeper extends JFrame implements ActionListener {
 		minesLabel.setBorder(BorderFactory.createEmptyBorder(5,10,5,10));
 		minesLabel.setForeground(Color.GREEN);
 
-		statusPanel.add(new JLabel(ImageLoader.createImageIcon("blue_ball.png")));
+//		statusPanel.add(new JLabel(ImageLoader.createImageIcon("blue_ball.png")));
 		statusPanel.add(timeLabel);
-		statusPanel.add(new JLabel(ImageLoader.createImageIcon("red_ball.png")));
+//		statusPanel.add(new JLabel(ImageLoader.createImageIcon("red_ball.png")));
 		statusPanel.add(minesLabel);
 		contentPane.add(statusPanel, BorderLayout.NORTH);
 

@@ -78,12 +78,15 @@ public class MineFieldButton extends JButton implements Observer {
 				icon = new ImageIcon(imgFile);
 			}
 			else if (mined && options.isShowHiddenMines()) {
-				icon = ImageLoader.createImageIcon("blue_ball.png");	
+				String imgFile = imgFolder + "mine-light-gray.png";
+				icon = new ImageIcon(imgFile);
 			}
 		}
 		else {
-			if (mined)
-				icon = ImageLoader.createImageIcon("red_ball.png");
+			if (mined) {
+				String imgFile = imgFolder + "mine-red.png";
+				icon = new ImageIcon(imgFile);
+			}
 			else {
 				// show number of surrounding mines
 				int mineCount = mineField.getMineCount(row, col);
