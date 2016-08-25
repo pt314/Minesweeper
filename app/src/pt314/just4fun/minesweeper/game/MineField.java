@@ -10,7 +10,7 @@ public class MineField {
 	private int rows;
 	private int cols;
 	
-	private MineFieldCell[][] mineField;
+	private Cell[][] mineField;
 	
 	public MineField(int rows, int cols) {
 		// Initialize member variables
@@ -18,10 +18,10 @@ public class MineField {
 		this.cols = cols;
 
 		// Create mine field array
-		mineField = new MineFieldCell[rows][cols];
+		mineField = new Cell[rows][cols];
 		for (int r = 0; r < rows; r++)
 			for (int c = 0; c < cols; c++)
-				mineField[r][c] = new MineFieldCell(r, c);
+				mineField[r][c] = new Cell(r, c);
 	}
 	
 	public int getRows() {
@@ -32,7 +32,7 @@ public class MineField {
 		return cols;
 	}
 
-	public MineFieldCell getCell(int row, int col) {
+	public Cell getCell(int row, int col) {
 		if (!withinBounds(row, col))
 			return null;
 		return mineField[row][col];

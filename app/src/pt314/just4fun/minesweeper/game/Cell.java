@@ -5,7 +5,7 @@ import java.util.Observable;
 /**
  * A single cell in a mine field.
  */
-public class MineFieldCell extends Observable {
+public class Cell extends Observable {
 	
 	private int row;
 	
@@ -36,7 +36,7 @@ public class MineFieldCell extends Observable {
 	 */
 	private CellMark mark;
 	
-	public MineFieldCell(int row, int col) {
+	public Cell(int row, int col) {
 		this.row = row;
 		this.col = col;
 		this.mined = false;
@@ -137,7 +137,7 @@ public class MineFieldCell extends Observable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		MineFieldCell other = (MineFieldCell) obj;
+		Cell other = (Cell) obj;
 		if (col != other.col)
 			return false;
 		if (row != other.row)

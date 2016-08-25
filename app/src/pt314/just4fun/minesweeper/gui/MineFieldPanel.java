@@ -13,7 +13,7 @@ import javax.swing.border.Border;
 import pt314.just4fun.minesweeper.GameOptions;
 import pt314.just4fun.minesweeper.game.Game;
 import pt314.just4fun.minesweeper.game.MineField;
-import pt314.just4fun.minesweeper.game.MineFieldCell;
+import pt314.just4fun.minesweeper.game.Cell;
 
 public class MineFieldPanel extends JPanel {
 
@@ -66,7 +66,7 @@ public class MineFieldPanel extends JPanel {
 	public void disableButtons() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
-				MineFieldCell cell = mineField.getCell(row, col);
+				Cell cell = mineField.getCell(row, col);
 				mineFieldButtons[row][col].setEnabled(false);
 				mineFieldButtons[row][col].update();
 			}
@@ -76,7 +76,7 @@ public class MineFieldPanel extends JPanel {
 	public void showMines() {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
-				MineFieldCell cell = mineField.getCell(row, col);
+				Cell cell = mineField.getCell(row, col);
 				if (cell.isMined())
 					cell.clear();
 				mineFieldButtons[row][col].update();

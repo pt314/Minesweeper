@@ -42,16 +42,16 @@ public class MineFieldGenerator {
 	// Add random mines to an existing field
 	public void generate(MineField field, int mines) {
 		// TODO: check for valid input
-		Set<MineFieldCell> cells = sample(field, mines);
-		for (MineFieldCell cell : cells)
+		Set<Cell> cells = sample(field, mines);
+		for (Cell cell : cells)
 			cell.setMined(true);
 	}
 
 	// Add random mines to an existing field
 	public void generate(MineField field, int mines, int row, int col) {
 		// TODO: check for valid input
-		Set<MineFieldCell> cells = sample(field, mines, row, col);
-		for (MineFieldCell cell : cells)
+		Set<Cell> cells = sample(field, mines, row, col);
+		for (Cell cell : cells)
 			cell.setMined(true);
 	}
 
@@ -63,8 +63,8 @@ public class MineFieldGenerator {
 	 * 
 	 * @return {@code numberOfCells} random cells from {@code field}.
 	 */
-	private Set<MineFieldCell> sample(MineField field, int numberOfCells) {
-		Set<MineFieldCell> cells = new HashSet<>();
+	private Set<Cell> sample(MineField field, int numberOfCells) {
+		Set<Cell> cells = new HashSet<>();
 		
 		int rows = field.getRows();
 		int cols = field.getCols();
@@ -85,8 +85,8 @@ public class MineFieldGenerator {
 	 * 
 	 * @see MineFieldGenerator#sample(MineField, int)
 	 */
-	private Set<MineFieldCell> sample(MineField field, int numberOfCells, int startRow, int startCol) {
-		Set<MineFieldCell> cells = new HashSet<>();
+	private Set<Cell> sample(MineField field, int numberOfCells, int startRow, int startCol) {
+		Set<Cell> cells = new HashSet<>();
 		
 		int rows = field.getRows();
 		int cols = field.getCols();
@@ -153,7 +153,7 @@ public class MineFieldGenerator {
 	 * 
 	 * @return the cell with the given {@code index}
 	 */
-	private MineFieldCell getCellFromIndex(MineField field, int index) {
+	private Cell getCellFromIndex(MineField field, int index) {
 		// Determine row and column from index
 		int cellRow = index / field.getCols();
 		int cellCol = index % field.getCols();

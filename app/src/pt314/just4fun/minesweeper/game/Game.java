@@ -43,7 +43,7 @@ public class Game extends Observable {
 	 */
 	public void toggleMark(int row, int col) {
 		
-		MineFieldCell cell = mineField.getCell(row, col);
+		Cell cell = mineField.getCell(row, col);
 		if (cell == null || cell.isCleared())
 			return;
 		
@@ -70,7 +70,7 @@ public class Game extends Observable {
 	 * Clears a cell and returns all the cells that get cleared
 	 * as a result of clearing the starting cell.
 	 */
-	public synchronized Set<MineFieldCell> clear(int row, int col) {
+	public synchronized Set<Cell> clear(int row, int col) {
 		
 		if (gameState == GameState.NEW) {
 			// Add random mines, ignoring the first cell cleared
@@ -79,9 +79,9 @@ public class Game extends Observable {
 			startGame();
 		}
 		
-		Set<MineFieldCell> cells = new HashSet<>();
+		Set<Cell> cells = new HashSet<>();
 
-		MineFieldCell startCell = mineField.getCell(row, col);
+		Cell startCell = mineField.getCell(row, col);
 		if (startCell == null)
 			return cells;
 		
@@ -99,19 +99,19 @@ public class Game extends Observable {
 		}
 		
 		// Clear other cells
-		Set<MineFieldCell> clearedCells = new HashSet<>();
-		Queue<MineFieldCell> queue = new LinkedList<>();
+		Set<Cell> clearedCells = new HashSet<>();
+		Queue<Cell> queue = new LinkedList<>();
 		queue.add(startCell);
 		startCell.clear();
 		clearedCells.add(startCell);
 		while (!queue.isEmpty()) {
-			MineFieldCell cell = queue.poll();
+			Cell cell = queue.poll();
 			int r = cell.getRow();
 			int c = cell.getCol();
 			if (mineField.getMineCount(r, c) == 0) {
 				for (int i = -1; i <= 1; i++) {
 					for (int j = -1; j <= 1; j++) {
-						MineFieldCell cell_ = mineField.getCell(r + i, c + j);
+						Cell cell_ = mineField.getCell(r + i, c + j);
 						if (cell_ != null && !cell_.isCleared()) {
 							if (!cell_.isMined() && !cell_.isMarked()) {
 								if (!clearedCells.contains(cell_)) {
@@ -144,12 +144,12 @@ public class Game extends Observable {
 	 * is equal to the number of surrounding mines.
 	 */
 	// TODO: make it safe -> only clear cells if number of flags = number of mines
-	public synchronized Set<MineFieldCell> clearSurrounding(int row, int col) {
+	public synchronized Set<Cell> clearSurrounding(int row, int col) {
 		
-		Set<MineFieldCell> cells = new HashSet<>();
+		Set<Cell> cells = new HashSet<>();
 
 		// Ignore uncleared cells
-		MineFieldCell startCell = mineField.getCell(row, col);
+		Cell startCell = mineField.getCell(row, col);
 		if (startCell == null || !startCell.isCleared())
 			return cells;
 		
@@ -162,9 +162,9 @@ public class Game extends Observable {
 		
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				MineFieldCell cell = mineField.getCell(row + i, col + j);
+				Cell cell = mineField.getCell(row + i, col + j);
 				if (cell != null) {
-					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
+					Set<Cell> clearedCells = clear(cell.getRow(), cell.getCol());
 					cells.addAll(clearedCells);
 				}
 			}
@@ -181,7 +181,7 @@ public class Game extends Observable {
 	 * without mines, and returns all the cells that get cleared as a
 	 * result.
 	 */
-	public synchronized Set<MineFieldCell> removeMine(int row, int col) {
+	public synchronized Set<Cell> removeMine(int row, int col) {
 
 		if (gameState == GameState.NEW) {
 			// Add random mines, ignoring the first cell cleared
@@ -190,10 +190,10 @@ public class Game extends Observable {
 			startGame();
 		}
 
-		Set<MineFieldCell> cells = new HashSet<>();
+		Set<Cell> cells = new HashSet<>();
 
 		// Ignore if cell is not mined
-		MineFieldCell startCell = mineField.getCell(row, col);
+		Cell startCell = mineField.getCell(row, col);
 		if (!startCell.isMined())
 			return cells;
 
@@ -204,9 +204,9 @@ public class Game extends Observable {
 		// Clear surrounding cells
 		for (int i = -1; i <= 1; i++) {
 			for (int j = -1; j <= 1; j++) {
-				MineFieldCell cell = mineField.getCell(row + i, col + j);
+				Cell cell = mineField.getCell(row + i, col + j);
 				if (cell != null && !cell.isMined()) {
-					Set<MineFieldCell> clearedCells = clear(cell.getRow(), cell.getCol());
+					Set<Cell> clearedCells = clear(cell.getRow(), cell.getCol());
 					cells.addAll(clearedCells);
 				}
 			}

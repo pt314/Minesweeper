@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 import pt314.just4fun.minesweeper.GameOptions;
 import pt314.just4fun.minesweeper.game.MineField;
-import pt314.just4fun.minesweeper.game.MineFieldCell;
+import pt314.just4fun.minesweeper.game.Cell;
 import pt314.just4fun.minesweeper.images.ImageLoader;
 
 public class MineFieldButton extends JButton implements Observer {
@@ -45,7 +45,7 @@ public class MineFieldButton extends JButton implements Observer {
 		if (mineField == null)
 			return;
 
-		MineFieldCell cell = mineField.getCell(row, col);
+		Cell cell = mineField.getCell(row, col);
 		boolean mined = mineField.isMined(row, col);
 		boolean enabled = mineField.isEnabled(row, col);
 		boolean cleared = mineField.isCleared(row, col);
