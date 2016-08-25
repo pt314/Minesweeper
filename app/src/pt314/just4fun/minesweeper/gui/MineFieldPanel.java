@@ -67,7 +67,6 @@ public class MineFieldPanel extends JPanel {
 		for (int row = 0; row < mineField.getRows(); row++) {
 			for (int col = 0; col < mineField.getCols(); col++) {
 				MineFieldCell cell = mineField.getCell(row, col);
-				cell.setEnabled(false);
 				mineFieldButtons[row][col].setEnabled(false);
 				mineFieldButtons[row][col].update();
 			}

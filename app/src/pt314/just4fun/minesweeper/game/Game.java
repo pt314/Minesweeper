@@ -153,10 +153,11 @@ public class Game extends Observable {
 		if (startCell == null || !startCell.isCleared())
 			return cells;
 		
-		// Ignore if number of flags is incorrect
+		// Ignore if number of flags or question marks is incorrect
 		int mineCount = mineField.getMineCount(row, col);
 		int flagCount = mineField.getFlagCount(row, col);
-		if (mineCount != flagCount)
+		int questionMarkCount = mineField.getQuestionMarkCount(row, col);
+		if (mineCount != flagCount || questionMarkCount > 0)
 			return cells;
 		
 		for (int i = -1; i <= 1; i++) {
