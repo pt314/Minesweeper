@@ -2,12 +2,13 @@ package pt314.just4fun.minesweeper.game;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Queue;
 import java.util.Set;
 
 import pt314.just4fun.minesweeper.util.StopWatch;
 
-public class Game {
+public class Game extends Observable {
 
 	// Used to add mines
 	private final MineFieldGenerator fieldGenerator = new MineFieldGenerator();
@@ -60,6 +61,9 @@ public class Game {
 				break;
 		}
 		cell.setMark(mark);
+
+		setChanged();
+		notifyObservers();
 	}
 
 	/**
@@ -123,6 +127,10 @@ public class Game {
 		}
 		if (isGameOver())
 			endGame(true); // all cells cleared
+
+		setChanged();
+		notifyObservers();
+
 		return clearedCells;
 	}
 
@@ -160,6 +168,10 @@ public class Game {
 				}
 			}
 		}
+
+		setChanged();
+		notifyObservers();
+
 		return cells;
 	}
 
@@ -198,6 +210,10 @@ public class Game {
 				}
 			}
 		}
+
+		setChanged();
+		notifyObservers();
+
 		return cells;
 	}
 
@@ -209,6 +225,8 @@ public class Game {
 	public synchronized void startGame() {
 		stopWatch.start();
 		gameState = GameState.STARTED;
+		setChanged();
+		notifyObservers();
 	}
 
 	public synchronized void endGame(boolean win) {
@@ -216,8 +234,14 @@ public class Game {
 			stopWatch.stop();
 			gameState = win ? GameState.WIN : GameState.LOSE;
 		}
+		setChanged();
+		notifyObservers();
 	}
 
+	public synchronized boolean isStarted() {
+		return gameState == GameState.STARTED;
+	}
+	
 	public synchronized boolean isOver() {
 		return gameState == GameState.WIN || gameState == GameState.LOSE;
 	}
