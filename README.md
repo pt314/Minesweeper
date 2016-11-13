@@ -1,7 +1,12 @@
 Minesweeper
 ===========
 
-Minesweeper is a simple game, which became very popular on Windows. I really liked playing it and wanted to implement my own version, just for fun. So here it is, Classic Minesweeper in Java. (In progress...)
+Minesweeper is a simple game, which became very popular on Windows. I really liked playing it and wanted to implement my own version, just for fun. So here it is, Classic Minesweeper in Java.
+
+This is a work in progress. I'll finish it when I have a little bit of free time. For now, here are some screenshots:
+
+![screenshot-1](/screenshots/20160823_001.png?raw=true "Screenshot 1")
+![screenshot-2](/screenshots/20160825_001.png?raw=true "Screenshot 2")
 
 You can learn more about the game online:
 
