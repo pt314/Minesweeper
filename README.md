@@ -108,17 +108,17 @@ Some things I want to do
 
 
 Basic game:
-OK - Mine graphics
-- Show mines when game is over
+- (done) Mine graphics
+- (done) Show mines when game is over
   - Show bad suspected mines (flags without mines)
-  OK - Show exploded mine with diff graphics than other mines
-OK - Status bar
+  - (done) Show exploded mine with diff graphics than other mines
+- (done) Status bar
   - Show number of mines (minus flags?)
 - Use mouse listener
 - Confirmation for new game when selecting difficulty
 - When a new game is started, don't recreate the whole UI!!!
 * Clearing a lot of mines is slow! (really big board, setting the size manually)
-  - reuse images and image icons
+  - Improve drawing speed, reuse images and image icons (may not be a problem with the board sizes used)
 
 
 Dev stuff:
@@ -134,9 +134,9 @@ Advanced:
 - Add pathfinder game
 
 Etc:
-OK + Add different sizes (small, medium, large)
+- Add different sizes (small, medium, large)
   - Determine sizes to use...
-OK - Use Observer pattern for buttons (?)
+- (done) Use Observer pattern for buttons (?)
 - Unit tests -> Code coverage
 
 
