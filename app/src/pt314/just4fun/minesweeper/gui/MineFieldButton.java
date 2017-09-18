@@ -64,7 +64,7 @@ public class MineFieldButton extends JButton implements Observer {
 		}
 		
 		// flags, mines, and mine counts
-		String imgFolder = "./res/img/";
+		String imgFolder = "./res/img/"; // TODO: move this out of here
 		int size = Math.min(getWidth(), getHeight());
 		imgFolder += size < 64 ? "small/" : "normal/";
 		ImageIcon icon = null;
