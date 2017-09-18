@@ -51,7 +51,7 @@ public class MineFieldButton extends JButton implements Observer {
 		boolean cleared = mineField.isCleared(row, col);
 
 		// enabled
-//		setEnabled(enabled);
+		//setEnabled(enabled);
 		
 		// border
 		if (!cleared) {

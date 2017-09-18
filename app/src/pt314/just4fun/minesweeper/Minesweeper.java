@@ -29,6 +29,9 @@ import pt314.just4fun.minesweeper.gui.StatusPanel;
 import pt314.just4fun.minesweeper.images.ImageLoader;
 import pt314.just4fun.minesweeper.util.Time;
 
+/**
+ * Main game class.
+ */
 public class Minesweeper extends JFrame implements ActionListener {
 
 	private GameOptions options;
